@@ -1,0 +1,23 @@
+
+
+/composer.lock
+/vendor/*
+
+phpunit.xml
+test.php
+
+Thumbs.db
+.DS_Store
+.project
+_scratch
+
+*.patch
+*.diff
+* copy*
+*OLD*
+*ORIG*
+*BAK
+*.log
+
+
+#End.
