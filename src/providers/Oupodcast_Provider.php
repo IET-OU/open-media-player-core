@@ -1,14 +1,15 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
 /**
  * OU Media Player/ OU Podcast oEmbed service provider.
  *
  * @copyright Copyright 2011 The Open University (IET).
  * @author N.D.Freear, 3 March 2011.
  */
-require_once APPPATH.'libraries/ouplayer_lib.php';
+require_once __DIR__ . '/../ouplayer_lib.php';
 
+use \IET_OU\Open_Media_Player\Oembed_Provider;
 
-class Oupodcast_serv extends Oembed_Provider {
+class Oupodcast_Provider extends Oembed_Provider {
 
   public $regex = 'http://podcast.open.ac.uk/*/*';
   public $about = <<<EOT
@@ -48,7 +49,7 @@ EOT;
   public function __construct() {
       parent::__construct();
 
-      if ($this->CI->config->item('podcast_data_use_feed')) {
+      if ($this->config_item('podcast_data_use_feed')) {
         $this->CI->load->model('Podcast_items_feed_model', 'podcast_items_model');
         $method = 'feed';
       } else {
@@ -57,7 +58,7 @@ EOT;
         $method = 'db';
       }
 
-      $endpoint = $this->CI->config->item('player_oembed_endpoint');
+      $endpoint = $this->config_item('player_oembed_endpoint');
       if ($endpoint) {
         $this->_endpoint_url = $endpoint;
         //$this->_comment = NULL;

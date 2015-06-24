@@ -27,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "IET_OU\\Open_Media_Player\\": "src"
+      "IET_OU\\Open_Media_Player\\": [ "src", "src/providers" ]
     }
   },
   "autoload-dev": {
@@ -42,11 +42,11 @@
       "#phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*",
       "phpunit"
     ],
-    "test-x": [
-      "phpcs --standard=PSR2 -n --encoding=utf-8 --extensions=php src/*"
+    "test-cs": [
+      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*"
     ],
     "fix": [
-      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/X*"
+      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/pro*"
     ]
   },
   "config": {

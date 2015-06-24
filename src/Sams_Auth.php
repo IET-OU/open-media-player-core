@@ -1,4 +1,5 @@
-<?php
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
 * OU SAMS authentication.
 *

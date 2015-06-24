@@ -1,4 +1,5 @@
-<?php  defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
  * An abstract theme from which to extend OU Media Player themes or skins.
  *
@@ -6,8 +7,10 @@
  * @author N.D.Freear, 20 March 2012.
  */
 
+use \IET_OU\Open_Media_Player\Base;
+
 // Based on (private): https://gist.github.com/08e20a98136289bbd7ec
-abstract class Player_Theme
+abstract class Media_Player_Theme extends Base
 {
 
     public $name;    // The short theme name, used internally (auto-generated from class name).
@@ -28,8 +31,6 @@ abstract class Player_Theme
     protected $controls_height;  // Pixels.
     protected $controls_overlap; // Boolean.
 
-    protected $CI;
-
     const ENGINE_PATH = 'engines/';
     const THEME_PATH  = 'themes/';
 
@@ -38,7 +39,7 @@ abstract class Player_Theme
     */
     public function __construct()
     {
-        $this->CI =& get_instance();
+        parent::__construct();
 
         // We use $this - an instance, not a class.
         $this->name = strtolower(preg_replace('#_Theme$#i', '', get_class($this)));

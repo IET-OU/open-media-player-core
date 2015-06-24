@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
  * OU Media Player library - player meta-data classes.
  *
@@ -6,11 +7,12 @@
  * @author N.D.Freear, 2011-04-07.
  */
 
+use \IET_OU\Open_Media_Player\Base;
 
 /* Ouplayer class - Holds meta-data for the player.
    Consistency between OU and OUVLE variants.
 */
-abstract class Base_player
+abstract class Base_player extends Base
 {
 
     const DEF_WIDTH = 560; #Was: 640;

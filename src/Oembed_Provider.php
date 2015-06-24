@@ -1,4 +1,5 @@
-<?php  defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
  * Base class for all oEmbed service provider libraries.
  *
@@ -6,6 +7,7 @@
  * @author N.D.Freear, extracted from oem. controller 24 Feb 2011/ extended 4 July 2012.
  */
 
+use \IET_OU\Open_Media_Player\Base;
 
 interface iService
 {
@@ -18,7 +20,7 @@ interface iService
 
 /** Was: Base_service
 */
-abstract class Oembed_Provider implements iService
+abstract class Oembed_Provider extends Base implements iService
 {
 
     public $regex = '';            # array();
@@ -57,19 +59,20 @@ abstract class Oembed_Provider implements iService
 ..
 ] */
 
-    protected $CI;
 
     /** Constructor: auto-generate 'name' property.
     */
     public function __construct()
     {
-        $this->CI =& get_instance();
+        parent::__construct();
 
       // We use $this - an instance, not a class.
         $this->name = strtolower(preg_replace('#_serv$#i', '', get_class($this)));
 
       // Get the Google Analytics ID, if available.
-        $this->_google_analytics = google_analytics_id($this->name);
+        if (function_exists('google_analytics_id')) {
+            $this->_google_analytics = \google_analytics_id($this->name);
+        }
     }
 
 

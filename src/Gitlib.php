@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
  * Gitlib: a simple Git library, to get changeset hashes and information.
  *
@@ -8,7 +9,9 @@
  * @author N.D.Freear, 2012-04-25.
  */
 
-class Gitlib
+use \IET_OU\Open_Media_Player\Base;
+
+class Gitlib extends Base
 {
 
     const GIT_DESCRIBE_REGEX = '/(?P<major>\d+)\.(?P<minor>\d+)(?P<id>-[\w\.]+)?-(?P<patch>\d+)-(?P<hash>g.+)/';
@@ -113,7 +116,7 @@ class Gitlib
         }
 
         //Security?
-        $git_path = $this->CI->config->item('git_path');
+        $git_path = $this->config_item('git_path');
 
 
         if (! $git_path) {

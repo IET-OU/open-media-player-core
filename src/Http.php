@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
+
 /**
  * HTTP request library.
  * Code from base_service.php, using cURL.
@@ -13,16 +14,10 @@
 */
 defined('CURLOPT_NOPROXY') ? null : define('CURLOPT_NOPROXY', 10177);
 
+use \IET_OU\Open_Media_Player\Base;
 
-class Http
+class Http extends Base
 {
-
-    protected $CI;
-
-    public function __construct()
-    {
-        $this->CI =& get_instance();
-    }
 
 
     public function request($url, $spoof = true, $options = array())
@@ -61,9 +56,9 @@ class Http
         // Bug #1334, Proxy mode to fix VLE caption redirects (Timedtext controller).
         $options[ 'cookie' ] = null;
         if (isset($options['proxy_cookies'])) {
-            $cookie_names =  $this->CI->config->item('httplib_proxy_cookies');
+            $cookie_names =  $this->config_item('httplib_proxy_cookies');
             if (! is_array($cookie_names)) {
-                $this->CI->_error('Array expected for $config[httplib_proxy_cookies]', 400);
+                $this->_error('Array expected for $config[httplib_proxy_cookies]', 400);
             }
 
             $cookies = '';
@@ -74,7 +69,7 @@ class Http
         }
 
         // Bug #4, Optionally add cookies for every request to a host/ domain.
-        $cookie_r = $this->CI->config->item('http_cookie');
+        $cookie_r = $this->config_item('http_cookie');
         if (is_array($cookie_r)) {
             foreach ($cookie_r as $domain => $cookie) {
                 if (false !== strpos($url, $domain)) {
@@ -92,8 +87,8 @@ class Http
 
       // Merge the default options.
         $options += array(
-            'proxy' => $this->CI->config->item('http_proxy'),
-            'no_proxy' => $this->CI->config->item('http_no_proxy'),
+            'proxy' => $this->config_item('http_proxy'),
+            'no_proxy' => $this->config_item('http_no_proxy'),
             'headers' => array(),
             'method' => 'GET',
             'data' => null,
@@ -113,7 +108,7 @@ class Http
 
 
     /** Perform the HTTP request using cURL.
-  */
+    */
     protected function _http_request_curl($url, $spoof, $options, $result)
     {
         if (!function_exists('curl_init')) {
@@ -177,7 +172,7 @@ class Http
         }
         if ($errno = curl_errno($h_curl)) {
             //Error. Quietly log?
-            $this->CI->_log('error', "cURL $errno, ".curl_error($h_curl)." GET $url");
+            $this->_log('error', "cURL $errno, ".curl_error($h_curl)." GET $url");
           #$this->CI->firephp->fb("cURL $errno", "cURL error", "ERROR");
             $result->http_code = "500." . $errno;
             $result->curl_errno = $errno;
