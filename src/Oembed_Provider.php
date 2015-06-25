@@ -22,6 +22,7 @@ interface iService
 */
 abstract class Oembed_Provider extends Base implements iService
 {
+    protected static $hosts = array();
 
     public $regex = '';            # array();
     public $about = '';            # Human
@@ -67,7 +68,7 @@ abstract class Oembed_Provider extends Base implements iService
         parent::__construct();
 
       // We use $this - an instance, not a class.
-        $this->name = strtolower(preg_replace('#_serv$#i', '', get_class($this)));
+        $this->name = strtolower($this->shortClass('#_(Provider|serv)$#i'));
 
       // Get the Google Analytics ID, if available.
         if (function_exists('google_analytics_id')) {
@@ -75,6 +76,15 @@ abstract class Oembed_Provider extends Base implements iService
         }
     }
 
+    /** Used by SubClasses.
+    */
+    public function onAddClass(& $class_array)
+    {
+        foreach (static::$hosts as $host) {
+            $class_array[ $host ] = get_class($this);
+        }
+        return $class_array;
+    }
 
     /** Get the machine-readable name for the Scripts controller.
   * @return string

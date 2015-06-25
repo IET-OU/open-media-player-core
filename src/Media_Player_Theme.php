@@ -42,11 +42,8 @@ abstract class Media_Player_Theme extends Base
         parent::__construct();
 
         // We use $this - an instance, not a class.
-        $this->name = strtolower(preg_replace('#_Theme$#i', '', get_class($this)));
-        $this->parent = strtolower(preg_replace('#_Theme$#i', '', get_parent_class($this)));
-     #$this->name = dirname(__FILE__);
-   #echo __FILE__;
-   #echo $this->parent;
+        $this->name = strtolower($this->shortClass('#_Theme$#i'));
+        $this->parent = strtolower($this->shortClass('#_Theme$#i', '', true));
     }
 
     /** Get the machine-readable name for the Scripts controller.

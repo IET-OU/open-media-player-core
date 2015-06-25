@@ -25,9 +25,6 @@
   <exclude-pattern>src/class.pdf2text.php</exclude-pattern>
   <exclude-pattern>src/POParser.php</exclude-pattern>
 
-  <!-- Why does `phpcbf` fail on http.php ?? -->
-  <exclude-pattern>libraries/ht--tp.php</exclude-pattern>
-
   <!-- Temporarily exclude all views and provider-libraries. -->
   <exclude-pattern>*/views/*</exclude-pattern>
   <exclude-pattern>src/providers/</exclude-pattern>

@@ -68,6 +68,19 @@ abstract class Base
         }
     }
 
+    /** Get class name, without namespace, optionally trim content by RegExp.
+    http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-
+    */
+    protected function shortClass($regex = null, $replace = '', $is_parent = false)
+    {
+        $with_namespace = $is_parent ? get_parent_class($this) : get_class($this);
+        $short_name = substr($with_namespace, strrpos($with_namespace, '\\') + 1);
+        if ($regex) {
+            return preg_replace($regex, $replace, $short_name);
+        }
+        return $short_name;
+    }
+
     protected function throw_no_framework_found_warning($function, $args = null)
     {
         if (static::$throw_no_framework) {
