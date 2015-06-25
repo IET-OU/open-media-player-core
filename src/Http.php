@@ -19,7 +19,6 @@ use \IET_OU\Open_Media_Player\Base;
 class Http extends Base
 {
 
-
     public function request($url, $spoof = true, $options = array())
     {
         $result = $this->_prepare_request($url, $spoof, $options);
@@ -63,7 +62,7 @@ class Http extends Base
 
             $cookies = '';
             foreach ($cookie_names as $cname) {
-                $cookies .= "$cname=". $this->CI->input->cookie($cname) .'; ';
+                $cookies .= "$cname=". $this->cookie($cname) .'; ';
             }
             $options['cookie'] = rtrim($cookies, '; ');
         }
@@ -115,7 +114,7 @@ class Http extends Base
             die('Error, cURL is required.');
         }
 
-        $this->CI->_debug($options);
+        $this->_debug($options);
 
         $h_curl = curl_init($url);
 
@@ -173,7 +172,7 @@ class Http extends Base
         if ($errno = curl_errno($h_curl)) {
             //Error. Quietly log?
             $this->_log('error', "cURL $errno, ".curl_error($h_curl)." GET $url");
-          #$this->CI->firephp->fb("cURL $errno", "cURL error", "ERROR");
+            //$this->CI->firephp->fb("cURL $errno", "cURL error", "ERROR");
             $result->http_code = "500." . $errno;
             $result->curl_errno = $errno;
             $result->curl_error = curl_error($h_curl);
@@ -188,5 +187,11 @@ class Http extends Base
         curl_close($h_curl);
 
         return (object) $result;
+    }
+
+    /** Utility to safely get a cookie. */
+    protected function cookie($key, $filter = FILTER_SANITIZE_STRING, $options = null)
+    {
+        return filter_input(INPUT_COOKIE, $key, $filter, $options);
     }
 }

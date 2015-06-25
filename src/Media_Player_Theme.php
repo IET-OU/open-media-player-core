@@ -97,11 +97,12 @@ abstract class Media_Player_Theme extends Base
     }
 
 
-    /** Get a configuration item, set a default if it doesn't exist.
+    /** TODO: DEPRECATED.
+    *
+    * Get a configuration item, set a default if it doesn't exist.
     */
     public function config_option($name, $default = null)
     {
-        $cfg = $this->CI->config;
-        return $cfg->item($name) ? $cfg->item($name) : $default;
+        return $this->config_item($name, $default);
     }
 }

@@ -52,19 +52,17 @@ try {
   die('EX: '.$ex->getMessage().PHP_EOL);
 }*/
 
+use \IET_OU\Open_Media_Player\Base;
 
-class Pdftohtml {
+class Pdftohtml extends Base {
 
   protected static $cmd_path = '/usr/bin/pdftohtml'; #Redhat 6.
-  protected $CI;
 
 
   public function __construct() {
-	$path = NULL;
+	$path = $this->config_item('pdftohtml_path');
 	// CodeIgniter context.
-	if (function_exists('get_instance')) {
-	  $this->CI =& get_instance();
-	  $path = $this->CI->config->item('pdftohtml_path');
+	if ($path) {
 	}
 	// Standalone context.
 	elseif (defined('PDFTOHTML_PATH')) {
@@ -76,9 +74,10 @@ class Pdftohtml {
 	if (is_string($path) && strlen($path) > 0) {
 	  self::$cmd_path = $path;
 	}
-	if (function_exists('log_message')) {
+	/*if (function_exists('log_message')) {
 	  log_message('debug', __CLASS__." Class Initialized | ".self::$cmd_path);
-	}
+	}*/
+	$this->_log('debug', __CLASS__." Class Initialized | ".self::$cmd_path);
   }
 
 
@@ -181,8 +180,8 @@ class Pdftohtml {
   protected function _exec($options, array &$output_r = NULL, &$return_var = NULL) {
     if (! file_exists(self::$cmd_path)) {
       //Error.
-      if (isset($this->CI)) {
-        $this->CI->_debug('Error finding pdftohtml binary | '.self::$cmd_path);
+      if ($this->has_ci()) {
+        $this->_debug('Error finding pdftohtml binary | '.self::$cmd_path);
       }
       throw new Exception('Error finding pdftohtml binary | '.self::$cmd_path);
     }

@@ -167,22 +167,14 @@ abstract class Oembed_Provider extends Base implements iService
         return array_slice($this->_examples, 0, $count);
     }
 
-
-    protected function _error($message, $code = 500, $from = null, $obj = null)
-    {
-        return $this->CI->_error($message, $code, $from, $obj);
-    }
-
-    protected function _log($level = 'error', $message = 'unknown', $php_error = false)
-    {
-        return $this->CI->_log($level, $message, $php_error);
-    }
-
+    /*Was: protected function _error(..) {} protected function _log(..) {} */
 
     protected function _http_request_curl($url, $spoof = true, $options = array())
     {
-        $this->CI->load->library('http');
-        return $this->CI->http->request($url, $spoof, $options);
+        $http = new \IET_OU\Open_Media_Player\Http();
+        return $http->request($url, $spoof, $options);
+        //$http = $this->load_library('http');
+        //return $this->CI->http->request($url, $spoof, $options);
     }
 
     protected function _http_request_json($url, $spoof = true, $options = array())
@@ -231,7 +223,7 @@ abstract class Oembed_Provider extends Base implements iService
   */
     protected function _embedly_api_key()
     {
-        return $this->CI->config->item('embedly_api_key');
+        return $this->config_item('embedly_api_key');
     }
 
     /** Get an Embed.ly oEmbed URL / JSON format.

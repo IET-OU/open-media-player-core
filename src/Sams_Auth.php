@@ -21,7 +21,7 @@ abstract class Privacy_Auth
   */
     public function is_private_caller()
     {
-        return ('private' == $this->CI->input->get('site_access'));
+        return ('private' == $this->get_param('site_access'));
     }
 }
 
@@ -39,10 +39,10 @@ class Sams_Auth extends Privacy_Auth
     public function authenticate()
     {
       // Security: note the 'localhost' check.
-        if (#'localhost' != $this->CI->input->server('HTTP_HOST') &&
-        !$this->CI->input->cookie('SAMSsession')
-        || !$this->CI->input->cookie('SAMS2session')) {
-            redirect($this->login_link(current_url()));
+        if (#'localhost' != $this->CI-X->input->server('HTTP_HOST') &&
+        !$this->cookie('SAMSsession')
+        || !$this->cookie('SAMS2session')) {
+            header('Locaton: ' . $this->login_link(current_url()));
         }
     }
 
@@ -57,11 +57,17 @@ class Sams_Auth extends Privacy_Auth
 
 
     /**
-  * Determine if the authenticated user is staff, including OU tutors.
-  */
+    * Determine if the authenticated user is staff, including OU tutors.
+    */
     public function is_staff()
     {
-        $sess = $this->CI->input->cookie('SAMS2session');
+        $sess = $this->cookie('SAMS2session');
         return $sess && (false !== strpos($sess, 'samsStaffID=') || false !== strpos($sess, 'samsTutorID='));
+    }
+
+    /** Utility to safely get a cookie. */
+    protected function cookie($key, $filter = FILTER_SANITIZE_STRING, $options = null)
+    {
+        return filter_input(INPUT_COOKIE, $key, $filter, $options);
     }
 }

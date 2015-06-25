@@ -65,15 +65,14 @@ abstract class Base_player extends Base
     }
 
     /** calc_size: Calculate the appropriate size for the Player oEmbed response.
-  */
+    */
     public function calc_size($width, $height, $audio_poster = false)
     {
-        $CI =& get_instance();
-   // Need to move 'maxwidth'/maxheight calls into the oEmbed controller.
-        $max_width = (int) $CI->input->get('maxwidth');
-        $max_height= (int) $CI->input->get('maxheight');
-        $resizable = $CI->input->get('_resizable'); //Not used.
-        $percent_width = (int) $CI->input->get('pcwidth'); //Experimental
+    // Need to move 'maxwidth'/maxheight calls into the oEmbed controller.
+        $max_width = (int) $this->get_param('maxwidth');
+        $max_height= (int) $this->get_param('maxheight');
+        $resizable = $this->get_param('_resizable'); //Not used.
+        $percent_width = (int) $this->get_param('pcwidth'); //Experimental
 
    // These sizes are NOT final! Need to check...
    #$rev_sizes = array(720=>460, 640=>410, 620=>400, 560=>350 /*340*/, 480=>360, 460=>350);

@@ -45,8 +45,9 @@
     "test-cs": [
       "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*"
     ],
+    "grep-ci": "grep -nr 'CI->' src/*.php",
     "fix": [
-      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/pro*"
+      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/Ba*"
     ]
   },
   "config": {

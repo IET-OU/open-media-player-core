@@ -29,6 +29,11 @@ abstract class Base
         }
     }
 
+    protected function has_ci()
+    {
+        return (bool) $this->CI;
+    }
+
     protected function get_param($key, $default = null, $filter = FILTER_SANITIZE_STRING, $options = null)
     {
         $value = filter_input(INPUT_GET, $key, $filter, $options);
@@ -43,6 +48,33 @@ abstract class Base
         if ($this->CI) {
             $value = $this->CI->config->item($item, $index);
             return $value ? $value : $default;
+        } else {
+            $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
+        }
+    }
+
+    protected function load_library($library = '', $params = null, $object_name = null)
+    {
+        if ($this->has_ci()) {
+            return $this->CI->load->library($library, $params, $object_name);
+        } else {
+            $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
+        }
+    }
+
+    protected function load_model($model, $name = '', $db_conn = false)
+    {
+        if ($this->has_ci()) {
+            return $this->CI->load->model($model, $name, $db_conn);
+        } else {
+            $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
+        }
+    }
+
+    protected function load_helper($helpers = array())
+    {
+        if ($this->has_ci()) {
+            return $this->CI->load->helper($helpers);
         } else {
             $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
         }
@@ -66,6 +98,15 @@ abstract class Base
         } else {
             $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
         }
+    }
+
+    protected function _debug($exp)
+    {
+        static $count = 0, $debug = true;
+        if ($debug) {
+            @header(sprintf('X-omp-core-%02d: %s', $count, json_encode($exp)));
+        }
+        $count++;
     }
 
     /** Get class name, without namespace, optionally trim content by RegExp.
