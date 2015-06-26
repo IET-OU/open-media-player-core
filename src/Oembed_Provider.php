@@ -10,18 +10,14 @@
 use \IET_OU\Open_Media_Player\Base;
 use \IET_OU\SubClasses\PluginInterface;
 
-interface iService
+/*interface iService
 {
-
-    /** call.
-  * @return object Return a $meta meta-data object, as inserted in DB.
-  */
     public function call($url, $regex_matches);
-}
+}*/
 
 /** Was: Base_service
 */
-abstract class Oembed_Provider extends Base implements iService, PluginInterface
+abstract class Oembed_Provider extends Base implements PluginInterface
 {
     public $regex = '';            # array();
     public $about = '';            # Human
@@ -74,6 +70,13 @@ abstract class Oembed_Provider extends Base implements iService, PluginInterface
             $this->_google_analytics = \google_analytics_id($this->name);
         }
     }
+
+
+    /** call.
+    * @return object Return a $meta meta-data object, as inserted in DB.
+    */
+    abstract public function call($url, $regex_matches);
+
 
     /** Called by SubClasses.
     */
@@ -232,50 +235,5 @@ abstract class Oembed_Provider extends Base implements iService, PluginInterface
     protected function _embedly_oembed_url($url)
     {
         return "http://api.embed.ly/1/oembed?format=json&url=$url&key=".$this->_embedly_api_key();
-    }
-}
-
-/**
- * Extend the base class for a generic IFRAME oEmbed provider.
- */
-abstract class Generic_Iframe_Oembed_Provider extends Oembed_Provider
-{
-
-    public function getView()
-    {
-        return 'oembed/_generic_iframe';
-    }
-
-    protected function getIframeResponse($url)
-    {
-        return (object) array(
-        '_comment' => '/*TODO: work-in-progress! */',
-        'original_url' => $url,
-        #'is_iframe' => TRUE,
-        #'view_name' => $this->getView(),
-        'class_name' => $this->name,
-        'provider_name' => $this->displayname,
-        'provider_url' => $this->_about_url,
-        'provider_icon' => $this->favicon,
-        'type' => $this->type, #rich
-        'title'=> null,
-        'width' => '100%', #640, #720,
-        'height'=> 400, #$height,
-        'embed_url'=> null,
-        );
-    }
-}
-
-/**
- *
- */
-abstract class External_Oembed_Provider extends Oembed_Provider
-{
-
-  #protected $_endpoint_url;	# oEmbed endpoint for 'external' providers, eg. iSpot.
-
-    public function call($url, $matches)
-    {
-        $this->_error('sorry the endpoint is: '. $this->_endpoint_url, 400.9);
     }
 }
