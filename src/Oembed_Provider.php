@@ -22,8 +22,6 @@ interface iService
 */
 abstract class Oembed_Provider extends Base implements iService
 {
-    protected static $hosts = array();
-
     public $regex = '';            # array();
     public $about = '';            # Human
     public $displayname = '';        # Human, mixed-case
@@ -80,8 +78,9 @@ abstract class Oembed_Provider extends Base implements iService
     */
     public function onAddClass(& $class_array)
     {
-        foreach (static::$hosts as $host) {
-            $class_array[ $host ] = get_class($this);
+        $class_array[ $this->domain ] = get_class($this);
+        foreach ($this->subdomains as $domain) {
+            $class_array[ $domain ] = get_class($this);
         }
         return $class_array;
     }

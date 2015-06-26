@@ -32,7 +32,7 @@ class Http extends Base
     #http://api.drupal.org/api/drupal/core%21includes%21common.inc/function/drupal_http_request/8
     protected function _prepare_request($url, $spoof, &$options)
     {
-        $result = new stdClass();
+        $result = new \stdClass();
 
         // Parse the URL and make sure we can handle the schema.
         $uri = @parse_url($url);

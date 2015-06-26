@@ -91,7 +91,7 @@ abstract class Media_Player_Theme extends Base
     */
     public function prepare(& $player)
     {
-        if (! is_subclass_of($player, 'Base_player')) {
+        if (! is_subclass_of($player, '\Base_player')) {
             die('Error, not a valid player object, '.__CLASS__);
         }
     }

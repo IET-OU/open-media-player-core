@@ -20,7 +20,7 @@ abstract class Base
         if (defined('CI_VERSION') && function_exists('get_instance')) {
             $ci =& \get_instance();
 
-            if ($ci instanceof IET_OU\Open_Media_Player\MY_Controller) {
+            if ($ci instanceof \IET_OU\Open_Media_Player\MY_Controller) {
                 $this->CI = $ci;
             }
         }
@@ -104,7 +104,7 @@ abstract class Base
     {
         static $count = 0, $debug = true;
         if ($debug) {
-            @header(sprintf('X-omp-core-%02d: %s', $count, json_encode($exp)));
+            @header(sprintf('X-OMP-Core-%02d: %s', $count, json_encode($exp)));
         }
         $count++;
     }
