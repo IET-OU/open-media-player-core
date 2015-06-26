@@ -1,23 +1,14 @@
 <?php namespace IET_OU\Open_Media_Player\Test;
 
-use \IET_OU\Open_Media_Player\SubClasses;
-use \IET_OU\Open_Media_Player\Oembed_Provider;
+use \IET_OU\SubClasses\SubClasses;
 
-class Mock_Ex_Provider extends Oembed_Provider {
-
-    protected static $hosts = array( 'example.org', 'example.com' );
-
-    public function call($url, $regex_matches) {
-    }
-}
 
 class SubClasses_Test extends \PHPUnit_Framework_TestCase
 {
-    // ...
-
     public function setup()
     {
         \IET_OU\Open_Media_Player\Base::$throw_no_framework = false;
+        \IET_OU\SubClasses\SubClasses::$verbose = true;
     }
 
     public function testOembedProviders()
@@ -28,10 +19,10 @@ class SubClasses_Test extends \PHPUnit_Framework_TestCase
         // Act
         $providers = $sub->get_oembed_providers();
 
-        var_dump($providers);
+        var_dump("Providers:", $providers);
 
         // Assert
-        $this->assertEquals(2, count($providers));
+        $this->assertEquals(4, count($providers));
     }
 
 }

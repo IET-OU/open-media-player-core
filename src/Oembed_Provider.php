@@ -8,6 +8,7 @@
  */
 
 use \IET_OU\Open_Media_Player\Base;
+use \IET_OU\SubClasses\PluginInterface;
 
 interface iService
 {
@@ -20,13 +21,13 @@ interface iService
 
 /** Was: Base_service
 */
-abstract class Oembed_Provider extends Base implements iService
+abstract class Oembed_Provider extends Base implements iService, PluginInterface
 {
     public $regex = '';            # array();
     public $about = '';            # Human
     public $displayname = '';        # Human, mixed-case
     public $name = null;            # Auto-generate, machine-readable, lower-case.
-    public $domain = '';            # HOST
+    public $domain = '<none>';      # HOST
     public $subdomains = array();    # HOSTs
     public $favicon = '';            # URL
     public $type = 'rich';        # photo|video|link|rich (http://oembed.com/#section2.3) NOT 'audio'
@@ -74,9 +75,9 @@ abstract class Oembed_Provider extends Base implements iService
         }
     }
 
-    /** Used by SubClasses.
+    /** Called by SubClasses.
     */
-    public function onAddClass(& $class_array)
+    public function registerPlugin(array & $class_array)
     {
         $class_array[ $this->domain ] = get_class($this);
         foreach ($this->subdomains as $domain) {
@@ -86,8 +87,8 @@ abstract class Oembed_Provider extends Base implements iService
     }
 
     /** Get the machine-readable name for the Scripts controller.
-  * @return string
-  */
+    * @return string
+    */
     public function getName()
     {
         return $this->name;

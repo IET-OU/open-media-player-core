@@ -1,4 +1,4 @@
-<?php  if (!defined('BASEPATH') && !defined('PDFTOHTML_PATH')) exit('No direct script access allowed');
+<?php namespace IET_OU\Open_Media_Player;
 /**
  * Convert PDF transcripts to clean HTML5 snippets.
  *

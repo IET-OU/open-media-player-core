@@ -1,4 +1,4 @@
-<?php namespace IET_OU\Open_Media_Player;
+<?php namespace IET_OU\SubClasses;
 
 /**
  * OffsetIterator utility class.

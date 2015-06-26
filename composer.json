@@ -27,12 +27,14 @@
   },
   "autoload": {
     "psr-4": {
-      "IET_OU\\Open_Media_Player\\": [ "src", "src/providers" ]
+      "IET_OU\\Open_Media_Player\\": [ "src", "src/providers" ],
+      "IET_OU\\SubClasses\\": "src/SubClasses"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "IET_OU\\Open_Media_Player\\Test\\": "tests"
+      "IET_OU\\Open_Media_Player\\Test\\": "tests",
+      "IET_OU\\Open_Media_Player\\Test\\Fixtures\\": "tests/fixtures"
     }
   },
   "scripts": {
@@ -47,7 +49,7 @@
     ],
     "grep-ci": "grep -nr 'CI->' src/*.php",
     "fix": [
-      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/Ba*"
+      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/Sub*"
     ]
   },
   "config": {
