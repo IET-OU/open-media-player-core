@@ -8,9 +8,10 @@
  */
 
 use \IET_OU\Open_Media_Player\Base;
+use \IET_OU\SubClasses\PluginInterface;
 
 // Based on (private): https://gist.github.com/08e20a98136289bbd7ec
-abstract class Media_Player_Theme extends Base
+abstract class Media_Player_Theme extends Base implements PluginInterface
 {
 
     public $name;    // The short theme name, used internally (auto-generated from class name).
@@ -46,9 +47,16 @@ abstract class Media_Player_Theme extends Base
         $this->parent = strtolower($this->shortClass('#_Theme$#i', '', true));
     }
 
+    /** Called by SubClasses.
+    */
+    public function registerPlugin(array & $class_array)
+    {
+        $class_array[ $this->getName() ] = get_class($this);
+    }
+
     /** Get the machine-readable name for the Scripts controller.
-  * @return string
-  */
+    * @return string
+    */
     public function getName()
     {
         return $this->name;
