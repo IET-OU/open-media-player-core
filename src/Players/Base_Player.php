@@ -12,7 +12,7 @@ use \IET_OU\Open_Media_Player\Base;
 /* Ouplayer class - Holds meta-data for the player.
    Consistency between OU and OUVLE variants.
 */
-abstract class Base_player extends Base
+abstract class Base_Player extends Base
 {
 
     const DEF_WIDTH = 560; #Was: 640;
@@ -24,11 +24,11 @@ abstract class Base_player extends Base
   // Bug #1415, Sizes in reverse-order: largest first. These sizes are NOT final! Need to check...
   // https://docs.google.com/document/d/1zgycCtBTcph7O4wwXAQtQq0jtXoJ3eKnSxKnNr6VRPU/edit
     protected static $video_sizes = array(
-    array('width' => 848, 'height' => 480, 'label' => 'x-large'),
-    array('width' => 640, 'height' => 360, 'label' => 'large'),
-    array('width' => 560, 'height' => 315, 'label' => 'medium'), //'default'?
-    array('width' => 480, 'height' => 270, 'label' => 'small'),
-    array('width' => 295, 'height' => 166, 'label' => 'x-small'),
+        array('width' => 848, 'height' => 480, 'label' => 'x-large'),
+        array('width' => 640, 'height' => 360, 'label' => 'large'),
+        array('width' => 560, 'height' => 315, 'label' => 'medium'), //'default'?
+        array('width' => 480, 'height' => 270, 'label' => 'small'),
+        array('width' => 295, 'height' => 166, 'label' => 'x-small'),
     );
 
   // Hmm, public?
@@ -54,8 +54,8 @@ abstract class Base_player extends Base
 
 
     /** Get a list of sizes, suitable for the Services controller.
-  * @return array
-  */
+    * @return array
+    */
     public function get_sizes()
     {
         $sizes = self::$video_sizes;
@@ -99,7 +99,7 @@ abstract class Base_player extends Base
             }
 
         } else {
-     #'video'
+            #'video'
 
             if ($max_width) {
               // Count down through the potential sizes.
@@ -165,95 +165,4 @@ abstract class Base_player extends Base
  */
 class Vle_player extends Base_player
 {
-}
-
-/** Player for OpenLearn-learningspace.
- * @link http://www.open.edu/openlearn
- */
-class Openlearn_player extends Base_player
-{
-    public $_related_url;
-    public $_related_text;
-
-    public $transcript_html;
-
-
-    public function is_private_podcast()
-    {
-        return false;
-    }
-}
-
-/** Player for OU Podcasts embedded in OU sites.
- * @link http://podcast.open.ac.uk
- */
-class Podcast_player extends Openlearn_player
-{
-    public $url;
-    public $_short_url;
-    public $thumbnail_url;
-
-    public $summary;
-
-    public $provider_name = 'oupodcast';
-    public $provider_mid;
-    public $_access; #Access control.
-    public $_copyright;
-    public $_track_md5;  #Was, _track_id (DB: shortcode)
-    public $_podcast_id; #Numeric
-    public $_album_id;   #Alpha-numeric (DB: custom_id)
-
-    public $timestamp;
-
-
-
-    /** Check 'intranet only' AND private flags etc.
-  */
-    public function is_restricted_podcast()
-    {
-        $this->_check_access();
-
-        return self::truthy($this->_access['intranet_only'])
-    #Ignore:  || $this->is_private_podcast() //[iet-it-bugs:1463]
-        || $this->is_deleted_podcast();
-    }
-
-    /** Just test the 'private' flag. */
-    public function is_private_podcast()
-    {
-        $this->_check_access();
-
-        return self::truthy($this->_access['private']);
-    }
-
-    public function is_deleted_podcast()
-    {
-        $this->_check_access();
-
-        return self::truthy($this->_access['deleted']);
-    }
-
-    public function is_published_podcast()
-    {
-        $this->_check_access();
-
-        return self::truthy($this->_access['published']);
-    }
-
-
-    /** A generic 'boolean' test. */
-    protected static function truthy($flag)
-    {
-        return 1 == $flag   // Feed model.
-        || 'Y' == $flag // DB model.
-        || true === $flag;
-    }
-
-    protected function _check_access()
-    {
-        if (! isset($this->_access['intranet_only'])) {
-          // ERROR?
-            die('Error, unexpected access condition, '. __CLASS__);
-        }
-    }
 }
