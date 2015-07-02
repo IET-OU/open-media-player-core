@@ -6,7 +6,6 @@
  * @copyright Copyright 2011 The Open University (IET).
  * @author N.D.Freear, 3 March 2011.
  */
-require_once __DIR__ . '/../ouplayer_lib.php';
 
 use \IET_OU\Open_Media_Player\Oembed_Provider;
 
@@ -34,7 +33,7 @@ EOT;
     'A Buen Puerto/Spanish: Introduction (audio)'
         => 'http://podcast.open.ac.uk/pod/l314-spanish#!fe481a4d1d',
     'http://podcast.open.ac.uk/feeds/l314-spanish/l314audio1.mp3',
-  'http://podcast.open.ac.uk/oulearn/languages/spanish/podcast-l314-spanish/fe481a4d1d', # '#!' or '/'
+    'http://podcast.open.ac.uk/oulearn/languages/spanish/podcast-l314-spanish/fe481a4d1d', # '#!' or '/'
     'Invisible Boundaries..: Entrepreneurial Lives (audio)' => 'http://podcast.open.ac.uk/pod/entrepreneurial-lives/#!cb127010cf',
     'Motion...: All the Fun of the Fair (video)' => 'http://podcast.open.ac.uk/pod/mst209-fun-of-the-fair#!a67918b334',
     'VC message 01-02-2011 (private/staff)' => 'http://podcast.open.ac.uk/pod/vc-message-to-staff#!746ee92293',
@@ -51,11 +50,11 @@ EOT;
       parent::__construct();
 
       if ($this->config_item('podcast_data_use_feed')) {
-        $this->CI->load->model('Podcast_items_feed_model', 'podcast_items_model');
+        $this->load_model('Podcast_items_feed_model', 'podcast_items_model');
         $method = 'feed';
       } else {
         // Or the original database model.
-        $this->CI->load->model('podcast_items_model');
+        $this->load_model('podcast_items_model');
         $method = 'db';
       }
 
@@ -63,10 +62,10 @@ EOT;
       if ($endpoint) {
         $this->_endpoint_url = $endpoint;
         //$this->_comment = NULL;
-        $this->CI->_debug(array('ouplayer_endpoint' => $endpoint));
+        $this->_debug(array('ouplayer_endpoint' => $endpoint));
       }
       // Was @header()
-      $this->CI->_debug('podcast_data='.$method);
+      $this->_debug('podcast_data='.$method);
   }
 
   /**
@@ -88,19 +87,19 @@ EOT;
   public function _inner_call($basename, $fragment, $transcript=FALSE) {
       //NDF: $pod_base = self::POD_BASE;
 
-	  $edge  = $this->CI->input->get('edge');
-	  $audio_poster= $this->CI->input->get('poster'); #Only for audio!
+	  $edge  = $this->get_param('edge');
+	  $audio_poster= $this->get_param('poster'); #Only for audio!
 
 	  // Query the podcast DB.
       $result = $this->CI->podcast_items_model->get_item($basename, $fragment, $captions=TRUE);
       #$result = $result_A[0];
       if (!$result) {
-	      $this->CI->_error('podcast item not found.', 404, __CLASS__);
+	      $this->_error('podcast item not found.', 404, __CLASS__);
       }
 
 	  // TODO: derive from maxwidth/maxheight!
-	  $width = \IET_OU\Open_Media_Player\Podcast_player::DEF_WIDTH;
-	  $height= \IET_OU\Open_Media_Player\Podcast_player::DEF_HEIGHT;
+	  $width = \IET_OU\Open_Media_Player\Podcast_Player::DEF_WIDTH;
+	  $height= \IET_OU\Open_Media_Player\Podcast_Player::DEF_HEIGHT;
 
 	  if (isset($result->media_url)) {
 		  // Initialize player from feed object.
@@ -116,10 +115,10 @@ EOT;
 
 	  $this->_post_process($player);
 
-	  $this->CI->firephp->fb($player, 'player', 'LOG');
+	  //$this->CI->firephp->fb($player, 'player', 'LOG');
 
 	  if ($this->CI->_is_debug(OUP_DEBUG_MAX)) {
-		$this->CI->_debug($player);
+		$this->_debug($player);
 	  }
       return $player;
   }
@@ -129,10 +128,10 @@ EOT;
   }
 
   protected function _init_player($result) {
-    $player = new Podcast_player;
+    $player = new \IET_OU\Open_Media_Player\Podcast_Player();
 
-	$player->width = Podcast_player::DEF_WIDTH;
-	$player->height = Podcast_player::DEF_HEIGHT;
+	$player->width  = \IET_OU\Open_Media_Player\Podcast_Player::DEF_WIDTH;
+	$player->height = \IET_OU\Open_Media_Player\Podcast_Player::DEF_HEIGHT;
 
     foreach ($result as $key => $value) {
 	  $player->{$key} = $value;
@@ -153,7 +152,7 @@ EOT;
   }
 
   protected function _process_DB_result($result) {
-      $pod_base = $this->config->item('podcast_media_base');
+      $pod_base = $this->config_item('podcast_media_base');
       if (! $pod_base) {
         // NDF: needs testing!
         $this->_error("Missing or empty \$config[podcast_media_base] in 'config/embed_config.php'", 503);
@@ -173,10 +172,10 @@ EOT;
       $shortcode = $result->shortcode;
 
 	  // TODO: derive from maxwidth/maxheight!
-	  $width = Podcast_player::DEF_WIDTH;
-	  $height= Podcast_player::DEF_HEIGHT;
+	  $width = \IET_OU\Open_Media_Player\Podcast_Player::DEF_WIDTH;
+	  $height= \IET_OU\Open_Media_Player\Podcast_Player::DEF_HEIGHT;
 
-	  $player = new Podcast_player;
+	  $player = new \IET_OU\Open_Media_Player\Podcast_Player();
 
 	  $player->title = $result->pod_title.': '.$result->title;
 	  $player->summary = $result->pod_summary;
@@ -279,7 +278,7 @@ EOT;
 		$player->caption_url = self::POD_BASE."/feeds/$player->_album_id/closed-captions/$result->pim_filename";
 	}
 	// Then, override with locally hosted captions if applicable.
-	$captions = $this->CI->config->item('captions');
+	$captions = $this->config_item('captions');
 	if (isset($captions[$player->_album_id]/*Was: _podcast_id*/) && isset($captions[$player->_album_id][$player->_track_md5])) {
 	    $player->caption_url = site_url("timedtext/pod_captions/$player->_album_id/$player->_track_md5/en.xml");
 	}
@@ -292,7 +291,7 @@ EOT;
 
     $res = FALSE;
 
-    $trans_n2_html = $this->CI->config->item('data_dir').'oupodcast/'.basename($player->transcript_html_url);
+    $trans_n2_html = $this->config_item('data_dir').'oupodcast/'.basename($player->transcript_html_url);
     $trans_n2_html= preg_replace( '/\.html?$/', '_trans_n2.html', $trans_n2_html);
     //$trans_n2_html= str_replace(array('.html', '.htm'), '_trans_n2.html', $trans_n2_html);
 
@@ -300,41 +299,42 @@ EOT;
 	  $res = $this->_http_request_curl($player->transcript_html_url);
       if ($res->success) {
 
-        $this->CI->_debug( "Success getting HTML transcript (N2-A), $player->transcript_html_url | " . $res->http_code );
+        $this->_debug( "Success getting HTML transcript (N2-A), $player->transcript_html_url | " . $res->http_code );
 
       } else {
         // Log error.
         log_message('error', __CLASS__.". Error getting HTML transcript (N2), $player->transcript_html_url | " . $res->http_code);
-        $this->CI->_debug( "Error getting HTML transcript (N2-A), $player->transcript_html_url | " . $res->http_code );
+        $this->_debug( "Error getting HTML transcript (N2-A), $player->transcript_html_url | " . $res->http_code );
       }
     }
 
     // We're only using the Pdftohtml::filter() call.
-    $this->CI->load->library('Pdftohtml');
+    $this->load_library('Pdftohtml');
+    $pdftohtml = $this->CI->pdftohtml;
 
 	if ($res && $res->success && $res->data) {
 	  $b1 = @file_put_contents($trans_n2_html, $res->data);
 	  if ($b1) {
-        $this->CI->_log('debug', "Transcript file written, $b1 bytes (N2), $trans_n2_html");
-        $this->CI->_debug("Transcript file written, $b1 bytes (N2), $trans_n2_html");
+        $this->_log('debug', "Transcript file written, $b1 bytes (N2), $trans_n2_html");
+        $this->_debug("Transcript file written, $b1 bytes (N2), $trans_n2_html");
 
-        $player->transcript_html = '<!--N2-->'. $this->CI->pdftohtml->filter($res->data);
+        $player->transcript_html = '<!--N2-->'. $pdftohtml->filter($res->data);
 	  } else {
-		$this->CI->_log('error', __CLASS__.". Error writing HTML transcript (N2), $trans_n2_html");
-		$this->CI->_debug('Error writing HTML transcript (N2)');
+		$this->_log('error', __CLASS__.". Error writing HTML transcript (N2), $trans_n2_html");
+		$this->_debug('Error writing HTML transcript (N2)');
 		return FALSE;
 	  }
 	}
     elseif (file_exists($trans_n2_html)) {
       // OR get an existing HTML snippet.
-      $player->transcript_html = '<!--N2-->'. $this->CI->pdftohtml->filter(@file_get_contents($trans_n2_html));
+      $player->transcript_html = '<!--N2-->'. $pdftohtml->filter(@file_get_contents($trans_n2_html));
       if (! $player->transcript_html) {
-        $this->CI->_log('error', __CLASS__.". Error getting HTML transcript (N2).");
+        $this->_log('error', __CLASS__.". Error getting HTML transcript (N2).");
         return FALSE;
       }
       if (preg_match( '/(\<\!DOCTYPE|Sign IN)/i', $player->transcript_html )) {
-        $this->CI->_log( 'error', __CLASS__ . '. Unexpected HTML transcript (N2) - A.' );
-        $this->CI->_debug( __CLASS__ . '. Unexpected HTML transcript (N2) - A.' );
+        $this->_log( 'error', __CLASS__ . '. Unexpected HTML transcript (N2) - A.' );
+        $this->_debug( __CLASS__ . '. Unexpected HTML transcript (N2) - A.' );
         $player->transcript_html = NULL;
         return FALSE;
       }
@@ -361,7 +361,7 @@ EOT;
     $res = $pdf = $html = false;
 
 	// Maybe a sub-directory?
-	  $trans_pdf = $this->CI->config->item('data_dir').'oupodcast/'.basename($player->transcript_url);
+	  $trans_pdf = $this->config_item('data_dir').'oupodcast/'.basename($player->transcript_url);
 	  $trans_file_xml = str_replace('.pdf', '.xml', $trans_pdf);
 	  $trans_file_html= str_replace('.pdf', '_trans.html',$trans_pdf);
 
@@ -378,25 +378,26 @@ EOT;
     if ($res && $res->success && $res->data) {
 	  $pdf = @file_put_contents($trans_pdf, $res->data);
 	  if (! $pdf) {
-		$this->CI->_log('error', __CLASS__.". Error writing PDF transcript, $trans_pdf");
-		$this->CI->_debug('Error writing PDF transcript');
+		$this->_log('error', __CLASS__.". Error writing PDF transcript, $trans_pdf");
+		$this->_debug('Error writing PDF transcript');
 		#echo '<META name="ERROR" content="Error writing PDF transcript" />' .PHP_EOL;
 
 		return $player;
 	  }
 	}
 
-	$this->CI->load->library('Pdftohtml');
+	$this->load_library('Pdftohtml');
+    $pdftohtml = $this->CI->pdftohtml;
 
-    $f_pdftohtml = $this->CI->config->item('pdftohtml_path');
+    $f_pdftohtml = $this->config_item('pdftohtml_path');
     if ($f_pdftohtml) {
 
       if ($pdf || !file_exists($trans_file_html)) {
         try {
-          $html = $this->CI->pdftohtml->parse($trans_pdf, $trans_file_xml);
-        } catch (Exception $e) {
+          $html = $pdftohtml->parse($trans_pdf, $trans_file_xml);
+        } catch (\Exception $e) {
           // Log error.
-          $this->CI->_log('error', __CLASS__.". Error parsing PDF transcript | Pdftohtml | ".$e->getMessage());
+          $this->_log('error', __CLASS__.". Error parsing PDF transcript | Pdftohtml | ".$e->getMessage());
         }
       }
     } else {
@@ -407,15 +408,15 @@ EOT;
     }
 	if ($html) {
 	  $b2 = file_put_contents($trans_file_html, $html);
-	  $this->CI->_log('debug', "Transcript file written, $b2 bytes, $trans_file_html");
-	  $player->transcript_html = $this->CI->pdftohtml->filter($html);
+	  $this->_log('debug', "Transcript file written, $b2 bytes, $trans_file_html");
+	  $player->transcript_html = $pdftohtml->filter($html);
 	}
 	elseif (file_exists($trans_file_html)) {
 	  // OR get an existing HTML snippet.
-	  $player->transcript_html = $this->CI->pdftohtml->filter(@file_get_contents($trans_file_html));
+	  $player->transcript_html = $pdftohtml->filter(@file_get_contents($trans_file_html));
 	  if (! $player->transcript_html) {
 	    //Error/ warning?
-	    $this->CI->_log('error', __CLASS__.". Error getting HTML transcript.");
+	    $this->_log('error', __CLASS__.". Error getting HTML transcript.");
 	  }
 	}
 
