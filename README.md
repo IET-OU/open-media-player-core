@@ -1,12 +1,12 @@
 # IET-OU / open-media-player-core
 
-Core components of Open Media Player — a unified, accessible online audio and video player solution for The Open University.
+Core components of Open Media Player — a unified, accessible online audio and video player solution for The Open University.  _Part of the Open Media Player framework._
 
 * https://mediaplayer.open.ac.uk
 
 
 ---
-License: to be confirmed.
+License:  `to be confirmed.`kkx
 
 © 2011-2015 The Open University. ([Institute of Educational Technology][])
 

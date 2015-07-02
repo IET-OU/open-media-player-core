@@ -44,7 +44,8 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
 
         // We use $this - an instance, not a class.
         //$this->name = strtolower($this->shortClass('#_Theme$#i'));
-        $this->parent = strtolower($this->shortClass('#_Theme$#i', '', $is_parent = true));
+        $this->getName();
+        $this->parent = strtolower($this->shortClass('#_Theme$#i', '', get_parent_class($this)));
     }
 
     /** Called by SubClasses.
@@ -104,7 +105,7 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
     */
     public function prepare(& $player)
     {
-        if (! is_subclass_of($player, '\Base_player')) {
+        if (! is_subclass_of($player, '\\IET_OU\\Open_Media_Player\\Base_Player')) {
             die('Error, not a valid player object, '.__CLASS__);
         }
     }

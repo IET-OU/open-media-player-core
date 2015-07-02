@@ -21,7 +21,7 @@ abstract class Privacy_Auth
   */
     public function is_private_caller()
     {
-        return ('private' == $this->get_param('site_access'));
+        return ('private' == filter_input(INPUT_GET, 'site_access', FILTER_SANITIZE_STRING));
     }
 }
 
