@@ -43,8 +43,8 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
         parent::__construct();
 
         // We use $this - an instance, not a class.
-        $this->name = strtolower($this->shortClass('#_Theme$#i'));
-        $this->parent = strtolower($this->shortClass('#_Theme$#i', '', true));
+        //$this->name = strtolower($this->shortClass('#_Theme$#i'));
+        $this->parent = strtolower($this->shortClass('#_Theme$#i', '', $is_parent = true));
     }
 
     /** Called by SubClasses.
@@ -54,11 +54,16 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
         $class_array[ $this->getName() ] = get_class($this);
     }
 
-    /** Get the machine-readable name for the Scripts controller.
+    /** Get the machine-readable name for the Scripts controller, etc.
+    *
+    * Play nice with `registerPlugin` - create the $name here, not in Constructor.
     * @return string
     */
     public function getName()
     {
+        if (!$this->name) {
+            $this->name = strtolower($this->shortClass('#_Theme$#i'));
+        }
         return $this->name;
     }
 

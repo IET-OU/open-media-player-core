@@ -54,7 +54,7 @@ EOT;
         $this->CI->load->model('Podcast_items_feed_model', 'podcast_items_model');
         $method = 'feed';
       } else {
-        // Or the original database model.    
+        // Or the original database model.
         $this->CI->load->model('podcast_items_model');
         $method = 'db';
       }
@@ -99,8 +99,8 @@ EOT;
       }
 
 	  // TODO: derive from maxwidth/maxheight!
-	  $width = Podcast_player::DEF_WIDTH;
-	  $height= Podcast_player::DEF_HEIGHT;
+	  $width = \IET_OU\Open_Media_Player\Podcast_player::DEF_WIDTH;
+	  $height= \IET_OU\Open_Media_Player\Podcast_player::DEF_HEIGHT;
 
 	  if (isset($result->media_url)) {
 		  // Initialize player from feed object.
@@ -168,7 +168,7 @@ EOT;
           'published' => $result->published_flag, #Y.
           'deleted'   => $result->deleted, #0.
       );
-	  
+
       $custom_id = $result->custom_id;
       $shortcode = $result->shortcode;
 
