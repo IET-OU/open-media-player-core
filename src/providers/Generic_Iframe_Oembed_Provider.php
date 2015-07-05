@@ -10,7 +10,7 @@ abstract class Generic_Iframe_Oembed_Provider extends Oembed_Provider
 
     public function getView()
     {
-        return 'oembed/_generic_iframe';
+        return __DIR__. '/../views/oembed/_generic_iframe';
     }
 
     protected function getIframeResponse($url)

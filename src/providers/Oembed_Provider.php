@@ -109,7 +109,13 @@ abstract class Oembed_Provider extends Base implements PluginInterface
   */
     public function getView()
     {
-        return 'oembed/'. $this->name;
+        $reflect = new \ReflectionClass($this);
+        return dirname($reflect->getFileName()) . '/../views/oembed/' . $this->getName();
+    }
+
+    public static function getRenderer()
+    {
+        return __DIR__ . '/../views/oembed/render';
     }
 
     /** Get the regular expression for the Oembed controller.
