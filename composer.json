@@ -30,7 +30,7 @@
       "IET_OU\\Open_Media_Player\\": [ "src", "src/providers", "src/Players" ],
       "IET_OU\\SubClasses\\": "src/SubClasses"
     },
-    "classmap": [ "src/third_party/class.pdf2text.php" ]
+    "classmap": [ "src/third_party/" ]
   },
   "autoload-dev": {
     "psr-4": {

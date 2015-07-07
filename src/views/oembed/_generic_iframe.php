@@ -36,4 +36,4 @@ EOF;
       'callback'=>$callback,
       'oembed' =>$oembed,
   );
-  $this->oembed_response($view_data);
+  $this->send_oembed_response($view_data);
