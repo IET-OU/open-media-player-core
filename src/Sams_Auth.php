@@ -42,8 +42,11 @@ class Sams_Auth extends Privacy_Auth
         if (#'localhost' != $this->CI-X->input->server('HTTP_HOST') &&
         !$this->cookie('SAMSsession')
         || !$this->cookie('SAMS2session')) {
-            header('Locaton: ' . $this->login_link(current_url()));
+            header('Location: ' . $this->login_link(current_url()), true, 307);
+            exit;
         }
+
+        return true;
     }
 
     public static function login_link($url)
