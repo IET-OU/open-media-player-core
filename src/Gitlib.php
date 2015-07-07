@@ -17,15 +17,12 @@ class Gitlib extends Base
     const GIT_DESCRIBE_REGEX = '/(?P<major>\d+)\.(?P<minor>\d+)(?P<id>-[\w\.]+)?-(?P<patch>\d+)-(?P<hash>g.+)/';
 
     protected $_hash;
-    protected $CI;
 
     protected static $REVISION_FILE = 'version.json';
 
     public function __construct()
     {
-        $this->CI =& get_instance();
-
-        self::$REVISION_FILE = dirname(__FILE__) .'/../../'. self::$REVISION_FILE;
+        self::$REVISION_FILE = self::revision_file_path();
     }
 
     /**
@@ -51,7 +48,7 @@ class Gitlib extends Base
     /** Save revision meta-data to a '.' file, JSON-encoded.
      *  (CloudEngine's Hglib uses PHP (un)serialize.)
      */
-    public function put_revision()
+    public function put_revision($echo = false)
     {
         $log = $this->_exec('log -1');
 
@@ -85,9 +82,11 @@ class Gitlib extends Base
         #$result['git'] = rtrim($this->_exec('--version'), "\r\n ");
         $result['file_date'] = date('c');
 
-        $bytes = $this->put_json(self::$REVISION_FILE, $result);
+        $bytes = $this->put_json(self::$REVISION_FILE, $result, $echo);
 
-        echo "File written, $bytes: ", self::$REVISION_FILE;
+        if (!$echo) {
+            fprintf(STDERR, "\nFile written, %d: %s", $bytes, self::$REVISION_FILE);
+        }
 
         return $result;
     }
@@ -99,10 +98,23 @@ class Gitlib extends Base
         return (object) json_decode(file_get_contents(self::$REVISION_FILE));
     }
 
-
-    protected function put_json($filename, $data)
+    protected function put_json($filename, $data, $echo = false)
     {
-        return file_put_contents($filename, str_replace('","', "\",\n\"", json_encode($data)));
+        $json = str_replace('","', "\",\n\"", json_encode($data));
+        if ($echo) {
+            echo $json;
+        } else {
+            return file_put_contents($filename, $json);
+        }
+    }
+
+    protected static function revision_file_path()
+    {
+        $path = __DIR__ . '/../../../../';
+        if (file_exists($path . 'composer.json')) {
+            return $path . self::$REVISION_FILE;
+        }
+        return __DIR__ . '/../' . self::$REVISION_FILE;
     }
 
     /** Execute a Git command, if allowed.
@@ -110,14 +122,13 @@ class Gitlib extends Base
     protected function _exec($cmd)
     {
 
-        if (! $this->CI->input->is_cli_request()) {
+        if (! $this->is_cli_request()) {
             echo "Warning, Git must be run from the commandline.".PHP_EOL;
             return false;
         }
 
         //Security?
         $git_path = $this->config_item('git_path');
-
 
         if (! $git_path) {
             $git_path = "git";  #"/usr/bin/env git";
@@ -130,7 +141,7 @@ class Gitlib extends Base
         $result = false;
         // The path may contain 'sudo ../git'.
         if (! file_exists($git_path)) {
-            echo "Warning, not found, $git_path".PHP_EOL;
+            fprintf(STDERR, "Warning, not found, %s\n", $git_path);
         }
 
 

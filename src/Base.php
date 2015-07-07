@@ -34,6 +34,11 @@ abstract class Base
         return (bool) $this->CI;
     }
 
+    protected function is_cli_request()
+    {
+        return 'cli' == php_sapi_name();
+    }
+
     protected function get_param($key, $default = null, $filter = FILTER_SANITIZE_STRING, $options = null)
     {
         $value = filter_input(INPUT_GET, $key, $filter, $options);
