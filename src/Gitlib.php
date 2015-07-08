@@ -85,7 +85,7 @@ class Gitlib extends Base
         $bytes = $this->put_json(self::$REVISION_FILE, $result, $echo);
 
         if (!$echo) {
-            fprintf(STDERR, "\nFile written, %d: %s", $bytes, self::$REVISION_FILE);
+            fprintf(STDERR, "File written, %d: %s\n", $bytes, self::$REVISION_FILE);
         }
 
         return $result;
@@ -128,7 +128,7 @@ class Gitlib extends Base
         }
 
         //Security?
-        $git_path = $this->config_item('git_path');
+        $git_path = null;  // Todo: no-CI error? $this->config_item('git_path');
 
         if (! $git_path) {
             $git_path = "git";  #"/usr/bin/env git";
@@ -140,20 +140,19 @@ class Gitlib extends Base
 
         $result = false;
         // The path may contain 'sudo ../git'.
-        if (! file_exists($git_path)) {
+        if ('git' != $git_path && ! file_exists($git_path)) {
             fprintf(STDERR, "Warning, not found, %s\n", $git_path);
         }
 
 
-        #if (file_exists($git_path)) {
         $cwd = getcwd();
         if ($cwd) {
             chdir(APPPATH);
         }
 
-            $handle = popen(escapeshellcmd($git_cmd), 'r'); //2>&1
-            $result = fread($handle, 2096);
-            pclose($handle);
+        $handle = popen(escapeshellcmd($git_cmd), 'r'); //2>&1
+        $result = fread($handle, 2096);
+        pclose($handle);
 
         if ($cwd) {
             chdir($cwd);
