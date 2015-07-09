@@ -53,6 +53,16 @@ abstract class Base_Player extends Base
     public $_extend; #Odds and ends?
 
 
+    /** Construct a player, optionally setting properties.
+    * @param array $properties
+    */
+    public function __construct($properties = array())
+    {
+        foreach ($properties as $key => $value) {
+            $this->{ $key } = $value;
+        }
+    }
+
     /** Get a list of sizes, suitable for the Services controller.
     * @return array
     */

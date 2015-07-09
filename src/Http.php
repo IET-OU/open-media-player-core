@@ -183,6 +183,7 @@ class Http extends Base
             $result->success = ($result->info['http_code'] < 300);
             $result->http_code = $result->info['http_code'];
         }
+        $result->is_not_found = (404 == $result->http_code);
 
         curl_close($h_curl);
 
