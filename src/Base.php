@@ -99,7 +99,7 @@ abstract class Base
     protected function _error($message, $code = 500, $from = null, $obj = null)
     {
         if ($this->CI) {
-            return $this->CI->_error($mesage, $code, $from, $obj);
+            return $this->CI->_error($message, $code, $from, $obj);
         } else {
             $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
         }
