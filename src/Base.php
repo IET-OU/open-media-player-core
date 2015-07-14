@@ -117,7 +117,7 @@ abstract class Base
     /** Get class name, without namespace, optionally trim content by RegExp.
     http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-
     */
-    protected function shortClass($regex = null, $replace = '', $class_name = null)
+    public function shortClass($regex = null, $replace = '', $class_name = null)
     {
         $with_namespace = $class_name ? $class_name : get_class($this);
         $short_name = substr($with_namespace, strrpos($with_namespace, '\\') + 1);
