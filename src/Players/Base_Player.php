@@ -1,7 +1,7 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * OU Media Player library - player meta-data classes.
+ * Open Media Player library - player meta-data classes.
  *
  * @copyright Copyright 2011 The Open University.
  * @author N.D.Freear, 2011-04-07.

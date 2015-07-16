@@ -77,7 +77,7 @@ class Http extends Base
             }
         }
 
-        $ua = 'OU Player/1.1.* (PHP/cURL)';
+        $ua = 'Open Media Player/1.1.* (PHP/cURL)';
         if ($spoof) {
             // Updated, April 2012.
             $ua = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19";
