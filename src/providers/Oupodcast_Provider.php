@@ -1,7 +1,7 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * OU Media Player/ OU Podcast oEmbed service provider.
+ * Open Media Player/ OU Podcast oEmbed service provider.
  *
  * @copyright Copyright 2011 The Open University (IET).
  * @author N.D.Freear, 3 March 2011.
@@ -14,7 +14,7 @@ class Oupodcast_Provider extends Oembed_Provider {
   public $regex = 'http://podcast.open.ac.uk/*/*';
   public $about = <<<EOT
   Learn at any time with The Open University audio and video podcasts.
-  Embed podcast audio and video on topics including study and research via the OU Media Player. [Public and restricted access.]
+  Embed podcast audio and video on topics including study and research via the Open Media Player. [Public and restricted access.]
 EOT;
   public $displayname = 'OU Podcasts (beta)';
   public $domain = 'podcast.open.ac.uk';
