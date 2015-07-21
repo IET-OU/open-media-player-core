@@ -92,7 +92,7 @@ abstract class Base_Player extends Base
         if ('audio'==$this->media_type) {
             $this->width = self::AUDIO_WIDTH;
             $this->object_height = self::AUDIO_HEIGHT;
-            if ('Podcast_player' == get_class($this)) {
+            if ($this->is_player('podcast')) {
                 $this->height = self::POD_AUDIO_HEIGHT;
             } elseif ($audio_poster) {
      #$this->poster_url) {
@@ -152,7 +152,7 @@ abstract class Base_Player extends Base
    */
     public function is_player($str_variant)
     {
-        $player = strtolower(str_replace('_player', '', get_class($this)));
+        $player = strtolower($this->shortClass('#_Player$#i'));
         return $player == strtolower($str_variant);
     }
 
@@ -173,6 +173,6 @@ abstract class Base_Player extends Base
 /** Player for The Open University's learning environment.
  * @link http://learn.open.ac.uk
  */
-class Vle_player extends Base_player
+class Vle_Player extends Base_Player
 {
 }

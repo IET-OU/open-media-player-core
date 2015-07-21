@@ -177,6 +177,9 @@ class Http extends Base
             $result->curl_errno = $errno;
             $result->curl_error = curl_error($h_curl);
             $result->success = false;
+            $result->url = $url;
+
+            $this->_debug($result);
         }
         $result->info = curl_getinfo($h_curl);
         if (!$result->http_code) {
