@@ -42,15 +42,15 @@
     "test": [
       "composer validate #--no-interaction",
       "parallel-lint src/*",
-      "#phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*",
+      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*",
       "phpunit"
     ],
     "test-cs": [
-      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*"
+      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/* tests/*"
     ],
     "grep-ci": "grep -nri -e '>CI' -e 'CI->' -e '$CI' --exclude Base.php -- src/*",
     "fix": [
-      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php src/Sub*"
+      "phpcbf --standard=./phpcs.xml -n -l  --encoding=utf-8 --extensions=php tests/*"
     ]
   },
   "config": {

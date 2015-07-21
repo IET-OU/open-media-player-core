@@ -3,12 +3,13 @@
 use \IET_OU\Open_Media_Player\Oembed_Provider;
 use \IET_OU\Open_Media_Player\Oupodcast_Provider;
 
-class Mock_Service_Provider extends Oembed_Provider {
+class Mock_Service_Provider extends Oembed_Provider
+{
 
-    public function call($url, $regex_matches) {
+    public function call($url, $regex_matches)
+    {
     }
 }
-
 
 class Oembed_Provider_Test extends \PHPUnit_Framework_TestCase
 {
@@ -46,4 +47,3 @@ class Oembed_Provider_Test extends \PHPUnit_Framework_TestCase
     }
     // ...
 }
-

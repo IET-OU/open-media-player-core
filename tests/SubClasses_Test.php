@@ -2,7 +2,6 @@
 
 use \IET_OU\SubClasses\SubClasses;
 
-
 class SubClasses_Test extends \PHPUnit_Framework_TestCase
 {
     public function setup()
@@ -24,6 +23,4 @@ class SubClasses_Test extends \PHPUnit_Framework_TestCase
         // Assert
         $this->assertEquals(4, count($providers));
     }
-
 }
-

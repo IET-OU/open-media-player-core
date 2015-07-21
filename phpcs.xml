@@ -21,12 +21,10 @@
   <exclude-pattern>*/*BAK*</exclude-pattern>
 
   <!-- Exclude third-party libraries. -->
-  <exclude-pattern>src/FirePHPCore</exclude-pattern>
-  <exclude-pattern>src/class.pdf2text.php</exclude-pattern>
-  <exclude-pattern>src/POParser.php</exclude-pattern>
+  <exclude-pattern>/third_party/</exclude-pattern>
 
   <!-- Temporarily exclude all views and provider-libraries. -->
-  <exclude-pattern>*/views/*</exclude-pattern>
+  <exclude-pattern>/views/</exclude-pattern>
   <exclude-pattern>src/providers/</exclude-pattern>
 
 
