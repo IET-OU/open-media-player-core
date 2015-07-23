@@ -26,6 +26,9 @@
   <!-- Temporarily exclude all views and provider-libraries. -->
   <exclude-pattern>/views/</exclude-pattern>
   <exclude-pattern>src/providers/</exclude-pattern>
+  <exclude-pattern>/application/models/</exclude-pattern>
+  <exclude-pattern>/libraries/MY_User_agent.php</exclude-pattern>
+  <exclude-pattern>/controllers/xml_namespace.php</exclude-pattern>
 
 
   <rule ref="PSR2">
@@ -39,7 +42,9 @@
     <!--
       For the moment, don't require namespaces.
     -->
-    <!--<exclude name="PSR1.Classes.ClassDeclaration"/>-->
+    <!--[if DYN:NO-NS]>
+      <exclude name="PSR1.Classes.ClassDeclaration"/>
+    <![endif]-->
 
     <!--<exclude name="PSR1.Files.SideEffects"/>-->
   </rule>
@@ -53,7 +58,10 @@
     <exclude-pattern>/application/controllers/</exclude-pattern>
 
     <exclude name="Squiz.Classes.ValidClassName"/>
-    <!--<exclude name="Squiz.Classes.ClassFileName"/>-->
+
+    <!--[if DYN:CFN]>
+      <exclude name="Squiz.Classes.ClassFileName"/>
+    <![endif]-->
   </rule>
 
   <!--
