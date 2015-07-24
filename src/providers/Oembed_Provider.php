@@ -3,6 +3,7 @@
 /**
  * Base class for all oEmbed service provider libraries.
  *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
  * @copyright Copyright 2011 The Open University.
  * @author N.D.Freear, extracted from oem. controller 24 Feb 2011/ extended 4 July 2012.
  */

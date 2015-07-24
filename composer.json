@@ -4,7 +4,7 @@
   "keywords": [ "ouplayer", "MediaPlayer", "audio", "video", "mediaelementjs", "oEmbed", "accessibility", "OpenUniversity", "IET-OU" ],
   "homepage": "https://embed.open.ac.uk",
   "type": "library",
-  "license": "proprietary",
+  "license": "GPL-3.0+",
   "minimum-stability": "dev",
   "authors": [
     { "name": "Nick Freear (@nfreear)", "role": "developer" }
@@ -61,7 +61,7 @@
   },
   "bin": [ "./bin/dyn-phpcs-xml.php" ],
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": "source"
   },
   "extra": {
     "//": [

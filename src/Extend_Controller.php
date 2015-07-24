@@ -3,6 +3,7 @@
 /**
  * Extend this class to create a custom controller, by default at `/extend/{example}/1/2`
  *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
  * @copyright Copyright 2015 The Open University.
  */
 

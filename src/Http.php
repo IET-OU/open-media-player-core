@@ -4,6 +4,7 @@
  * HTTP request library.
  * Code from base_service.php, using cURL.
  *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
  * @copyright Copyright 2011 The Open University.
  * @author N.D.Freear, 6 March 2012.
  */
