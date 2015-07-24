@@ -82,14 +82,15 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
   */
     public function getView($view = null)
     {
-        return 'themes/'. $this->getName() .'/views/'. ($view ? $view : $this->view);
+        return $this->classDir() . '/' . $this->getName() .'/views/'. ($view ? $view : $this->view);
     }
 
     /** Get a path to a view for the parent theme.
     */
     public function getParentView($view = null)
     {
-        return 'themes/'. $this->parent .'/views/'. ($view ? $view : $this->view);
+        $parent_dir = $this->classDir(get_parent_class($this));
+        return $parent_dir . '/' . $this->parent .'/views/'. ($view ? $view : $this->view);
     }
 
     public function getControlsHeight()

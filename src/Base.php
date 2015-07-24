@@ -146,6 +146,15 @@ abstract class Base
         return $short_name;
     }
 
+    /** Get directory for given class, or $this, using reflection.
+    */
+    protected function classDir($class_name = null)
+    {
+        $class_name = $class_name ? $class_name : get_class($this);
+        $reflect = new \ReflectionClass($class_name);
+        return dirname($reflect->getFileName());
+    }
+
     protected function throw_no_framework_found_warning($function, $args = null)
     {
         if (static::$throw_no_framework) {
