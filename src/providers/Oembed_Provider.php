@@ -1,9 +1,16 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * Base class for all oEmbed service provider libraries.
+ * Part of Open Media Player.
  *
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2011-2015 The Open University (IET-OU).
+ * @link      http://iet-ou.github.io/open-media-player
+ */
+
+/**
+ * Base class for all oEmbed service provider libraries.
+ *
  * @copyright Copyright 2011 The Open University.
  * @author N.D.Freear, extracted from oem. controller 24 Feb 2011/ extended 4 July 2012.
  */

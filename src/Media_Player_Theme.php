@@ -1,9 +1,16 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * An abstract theme from which to extend Open Media Player themes or skins.
+ * Part of Open Media Player.
  *
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2011-2015 The Open University (IET) and contributors.
+ * @link      http://iet-ou.github.io/open-media-player
+ */
+
+/**
+ * An abstract theme from which to extend Open Media Player themes or skins.
+ *
  * @copyright Copyright 2012 The Open University.
  * @author N.D.Freear, 20 March 2012.
  */

@@ -1,6 +1,14 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
+ * Part of Open Media Player.
+ *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2011-2015 The Open University (IET-OU).
+ * @link      http://iet-ou.github.io/open-media-player
+ */
+
+/**
  * Open Media Player/ OU Podcast oEmbed service provider.
  *
  * @copyright Copyright 2011 The Open University (IET).

@@ -1,9 +1,16 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * Extend this class to create a custom controller, by default at `/extend/{example}/1/2`
+ * Part of Open Media Player.
  *
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2011-2015 The Open University (IET) and contributors.
+ * @link      http://iet-ou.github.io/open-media-player
+ */
+
+/**
+ * Extend this class to create a custom controller, by default at `/extend/{example}/1/2`
+ *
  * @copyright Copyright 2015 The Open University.
  */
 

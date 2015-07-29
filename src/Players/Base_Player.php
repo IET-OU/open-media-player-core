@@ -1,9 +1,16 @@
 <?php namespace IET_OU\Open_Media_Player;
 
 /**
- * Open Media Player library - player meta-data classes.
+ * Part of Open Media Player.
  *
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2011-2015 The Open University (IET-OU).
+ * @link      http://iet-ou.github.io/open-media-player
+ */
+
+/**
+ * Open Media Player library - player meta-data classes.
+ *
  * @copyright Copyright 2011 The Open University.
  * @author N.D.Freear, 2011-04-07.
  */

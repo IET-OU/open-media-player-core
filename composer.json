@@ -11,7 +11,7 @@
   ],
   "support": {
     "email": "iet-webmaster@open.ac.uk",
-    "issues": "https://github.com/IET-OU/ouplayer/issues",
+    "issues": "https://github.com/IET-OU/open-media-player/issues",
     "source": "https://github.com/IET-OU/open-media-player-core"
   },
   "require": {
