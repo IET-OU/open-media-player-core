@@ -17,6 +17,7 @@ class Gitlib extends Base
     const GIT_DESCRIBE_REGEX = '/(?P<major>\d+)\.(?P<minor>\d+)(?P<id>-[\w\.]+)?-(?P<patch>\d+)-(?P<hash>g.+)/';
 
     protected $_hash;
+    protected $last_success = true;
 
     protected static $REVISION_FILE = 'version.json';
 
@@ -50,10 +51,15 @@ class Gitlib extends Base
      */
     public function put_revision($echo = false)
     {
+        $result = false;
         $log = $this->_exec('log -1');
+        $result[ '#' ] = $log ? 'OK' : 'Warning, Git not found? Proceed without.';
+        $result[ 'ok' ] = (bool) $log;
+        if (! $log) {
+            fprintf(STDERR, "OK (proceeding without Git)\n");
+        }
 
         $log = explode("\n", $log);
-        $result = false;
         //Hmm, a more efficient way?
         foreach ($log as $line) {
             if (false !== ($p = strpos($line, ' '))) {
@@ -121,10 +127,14 @@ class Gitlib extends Base
     */
     protected function _exec($cmd)
     {
-
         if (! $this->is_cli_request()) {
             echo "Warning, Git must be run from the commandline.".PHP_EOL;
-            return false;
+            exit(1);
+        }
+
+        // Quietly 'die'
+        if (! $this->last_success) {
+            return null;
         }
 
         //Security?
@@ -144,20 +154,24 @@ class Gitlib extends Base
             fprintf(STDERR, "Warning, not found, %s\n", $git_path);
         }
 
-
         $cwd = getcwd();
         if ($cwd) {
             chdir(APPPATH);
         }
 
-        $handle = popen(escapeshellcmd($git_cmd), 'r'); //2>&1
-        $result = fread($handle, 2096);
-        pclose($handle);
+        // Exec: combining stderr & stdout - not ideal (hides error messages!)
+        $output = $return_var = null;
+        $last_line = exec(escapeshellcmd($git_cmd) .' 2>&1', $output, $return_var);
 
         if ($cwd) {
             chdir($cwd);
         }
-        #}
-        return $result;
+
+        $this->last_success = (0 === $return_var);
+
+        if (! $this->last_success) {
+            return false;
+        }
+        return implode("\n", $output);
     }
 }
