@@ -177,10 +177,3 @@ abstract class Base_Player extends Base
         return true;
     }
 }
-
-/** Player for The Open University's learning environment.
- * @link http://learn.open.ac.uk
- */
-class Vle_Player extends Base_Player
-{
-}
