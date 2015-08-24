@@ -20,8 +20,12 @@ $filename = $argv[ $argc - 1 ];
 
 $xml = file_get_contents($filename);
 
-$xml = preg_replace('@<!--\[if DYN:NO-NS\]>(?P<dyn>[^\[]+)<!\[endif\]-->@msi', '$1', $xml);
-//$xml = preg_replace('@<!--\{DYN:NO-NS\}(?P<dyn>[^\{]+)\{\/DYN:NO-NS\}-->@i', '$1', $xml);
+if (in_array('--no-ns', $argv)) {
+    $xml = preg_replace('@<!--\[if DYN:NO-NS\]>(?P<dyn>[^\[]+)<!\[endif\]-->@msi', '$1', $xml);
+}
+if (in_array('--cfn', $argv)) {
+    $xml = preg_replace('@<!--\[if DYN:CFN\]>(?P<dyn>[^\[]+)<!\[endif\]-->@msi', '$1', $xml);
+}
 
 echo $xml;
 

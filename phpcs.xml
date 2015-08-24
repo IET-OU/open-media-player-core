@@ -22,6 +22,8 @@
 
   <!-- Exclude third-party libraries. -->
   <exclude-pattern>/third_party/</exclude-pattern>
+  <exclude-pattern>POParser</exclude-pattern>
+  <exclude-pattern>pdf2text</exclude-pattern>
 
   <!-- Temporarily exclude all views and provider-libraries. -->
   <exclude-pattern>/views/</exclude-pattern>
