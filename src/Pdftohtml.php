@@ -60,6 +60,8 @@ class Pdftohtml extends Base {
 
 
   public function __construct() {
+    parent::__construct();
+
 	$path = $this->config_item('pdftohtml_path');
 	// CodeIgniter context.
 	if ($path) {
@@ -74,9 +76,6 @@ class Pdftohtml extends Base {
 	if (is_string($path) && strlen($path) > 0) {
 	  self::$cmd_path = $path;
 	}
-	/*if (function_exists('log_message')) {
-	  log_message('debug', __CLASS__." Class Initialized | ".self::$cmd_path);
-	}*/
 	$this->_log('debug', __CLASS__." Class Initialized | ".self::$cmd_path);
   }
 
@@ -92,7 +91,7 @@ class Pdftohtml extends Base {
 
     $xo = $this->pdftoxml($pdf_file, $xml_file);
 
-    //<-?xml version="1.0" ?-> 
+    //<-?xml version="1.0" ?->
     $out = '<!DOCTYPE html><meta charset="utf-8"/><div class="TR"><style>b,em{display:block}</style>'.PHP_EOL;
     foreach ($xo->page as $page) {
       $out .= '<div class="pg">'.PHP_EOL;

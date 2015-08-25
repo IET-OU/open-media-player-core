@@ -317,8 +317,7 @@ EOT;
     }
 
     // We're only using the Pdftohtml::filter() call.
-    $this->load_library('Pdftohtml');
-    $pdftohtml = $this->CI->pdftohtml;
+    $pdftohtml = new \IET_OU\Open_Media_Player\Pdftohtml();
 
 	if ($res && $res->success && $res->data) {
 	  $b1 = @file_put_contents($trans_n2_html, $res->data);
