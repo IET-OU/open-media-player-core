@@ -85,7 +85,7 @@ EOT;
       $fragment = $matches[ 'sc' ];   #$matches[3]
       $is_file  = FALSE!==strpos($fragment, '.');
 
-      $this->embed_url = site_url("embed/pod/$basename/$fragment") . $this->CI->options_build_query();  //?theme=..&debug=..
+      $this->embed_url = site_url("embed/pod/$basename/$fragment") . $this->CI->_options_build_query();
       return $this->_inner_call($basename, $fragment);
   }
 
