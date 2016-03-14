@@ -5,7 +5,7 @@
   "homepage": "https://embed.open.ac.uk",
   "type": "library",
   "license": "GPL-3.0+",
-  "minimum-stability": "dev",
+  "minimum-stability": "alpha",
   "authors": [
     { "name": "Nick Freear (@nfreear)", "role": "developer" }
   ],
@@ -18,12 +18,12 @@
     "php": ">=5.3.3",
     "ext-curl": "*",
     "ext-xml": "*",
-    "nfreear/plugin-genie": "dev-master",
-    "iet-ou/open-media-player-themes": "dev-master"
+    "nfreear/plugin-genie": "^1.0",
+    "iet-ou/open-media-player-themes": "^2.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "~2.1.0",
-    "jakub-onderka/php-parallel-lint": "~0.8",
+    "squizlabs/php_codesniffer": "^2.5",
+    "jakub-onderka/php-parallel-lint": "^0.9.2",
     "phpunit/phpunit": "~4.0"
   },
   "autoload": {
@@ -41,7 +41,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "http://iet-embed-acct.open.ac.uk/satis/"
+      "url": "https://embed.open.ac.uk/iet-satis/"
     }
   ],
   "scripts": {
