@@ -1,13 +1,10 @@
 
-
 /composer.lock
 /vendor/*
 
 phpunit.xml
 test.php
 
-Thumbs.db
-.DS_Store
 .project
 _scratch
 
@@ -16,8 +13,7 @@ _scratch
 * copy*
 *OLD*
 *ORIG*
-*BAK
+*BAK*
 *.log
-
 
 #End.

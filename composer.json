@@ -18,13 +18,15 @@
     "php": ">=5.3.3",
     "ext-curl": "*",
     "ext-xml": "*",
-    "nfreear/plugin-genie": "^1.0",
-    "iet-ou/open-media-player-themes": "^2.0"
+    "nfreear/plugin-genie": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.5",
     "jakub-onderka/php-parallel-lint": "^0.9.2",
     "phpunit/phpunit": "~4.0"
+  },
+  "suggest": {
+    "iet-ou/open-media-player-themes": "^2.0; Open Media Player themes - CSS, Javascript & PHP"
   },
   "autoload": {
     "psr-4": {
@@ -47,7 +49,7 @@
   "scripts": {
     "test": [
       "composer validate --no-interaction",
-      "#parallel-lint src/*",
+      "./vendor/bin/parallel-lint --exclude vendor .",
       "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/*",
       "phpunit"
     ],
