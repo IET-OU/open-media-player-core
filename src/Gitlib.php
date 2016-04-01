@@ -14,7 +14,8 @@ use \IET_OU\Open_Media_Player\Base;
 class Gitlib extends Base
 {
 
-    const GIT_DESCRIBE_REGEX = '/(?P<major>\d+)\.(?P<minor>\d+)(?P<id>-[\w\.]+)?-(?P<patch>\d+)-(?P<hash>g.+)/';
+    const GIT_DESCRIBE_REGEX = '/v?(?P<major>\d+)\.(?P<minor>\d+)(?P<patch>\.\d+)(?P<id>-[\w\.]+)?-(?P<build>\d+)-(?P<hash>g.+)/';
+    const VERSION = '%s.%s%s.%s%s+%s';
 
     protected $_hash;
     protected $last_success = true;
@@ -74,13 +75,8 @@ class Gitlib extends Base
                 }
             }
         }
-        // Describe "v0.86-usertest-95-g.."
-        // Semantic Versioning, http://semver.org
-        $result['describe'] = trim($this->_exec('describe --tags --long'));
-        $result[ 'version' ] = $result[ 'describe' ];
-        if (preg_match(self::GIT_DESCRIBE_REGEX, $result[ 'describe' ], $m)) {
-            $result[ 'version' ] = $m['major'] .'.'. $m['minor'] .'.'. $m['patch'] . $m['id'] .'+'. $m['hash'];
-        }
+        $result = $this->gitDescribeVersion($result);
+
         $result[ 'branch' ] = trim($this->_exec('symbolic-ref --short HEAD'));
         // http://stackoverflow.com/questions/4089430/how-can-i-determine-the-url-that-a-local-git-repo-was-originally-pulled-from
         $result['origin'] = rtrim($this->_exec('config --get remote.origin.url'), "\r\n");
@@ -174,5 +170,18 @@ class Gitlib extends Base
             return false;
         }
         return implode("\n", $output);
+    }
+
+    protected function gitDescribeVersion($result) {
+        // Describe "v0.86-usertest-95-g.."
+        // Semantic Versioning, http://semver.org
+        $result[ 'describe' ] = trim($this->_exec('describe --tags --long'));
+        $version = $result[ 'describe' ];
+        if (preg_match(self::GIT_DESCRIBE_REGEX, $version, $matches)) {
+            $v = (object) $matches;
+            $version = sprintf(self::VERSION, $v->major, $v->minor, $v->patch, $v->build, $v->id, $v->hash);
+        }
+        $result[ 'version' ] = $version;
+        return $result;
     }
 }
