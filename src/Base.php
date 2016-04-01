@@ -48,7 +48,7 @@ abstract class Base
                 $this->CI = $ci;
             }
         }
-        if (!$this->CI) {
+        if (! $this->CI && ! defined('OMP_BUILD_THEME')) {
             $this->throw_no_framework_found_warning(__METHOD__, func_get_args());
         }
     }

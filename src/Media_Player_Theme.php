@@ -84,6 +84,16 @@ abstract class Media_Player_Theme extends Base implements PluginInterface
         return $this->display;
     }
 
+    public function getJavascripts()
+    {
+        return $this->javascripts;
+    }
+
+    public function getJsMin()
+    {
+        return $this->js_min;
+    }
+
     /** Get a path to a theme view (relative to application/ directory, without '.php').
   * @return string
   */
