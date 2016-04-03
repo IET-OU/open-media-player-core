@@ -7,23 +7,7 @@
 * @author N.D.Freear, 27 July 2012.
 */
 
-abstract class Privacy_Auth
-{
-
-    abstract public function authenticate();
-
-
-    /**
-  * Determine if the caller is a private site/ client.
-  *
-  * Note, it is the responsibility of the caller to set a HTTP GET parameter.
-  * Otherwise the caller is assumed to be public, with restricted-access warning being set as appropriate.
-  */
-    public function is_private_caller()
-    {
-        return ('private' == filter_input(INPUT_GET, 'site_access', FILTER_SANITIZE_STRING));
-    }
-}
+use \IET_OU\Open_Media_Player\Privacy_Auth;
 
 class Sams_Auth extends Privacy_Auth
 {
@@ -34,8 +18,9 @@ class Sams_Auth extends Privacy_Auth
     }
 
     /**
-  * Basic OU-SAMS session cookie check and redirect - used for VLE demo/test pages.
-  */
+    * Basic OU-SAMS session cookie check and redirect - used for VLE demo/test pages.
+    * @return boolean
+    */
     public function authenticate()
     {
       // Security: note the 'localhost' check.
@@ -61,6 +46,7 @@ class Sams_Auth extends Privacy_Auth
 
     /**
     * Determine if the authenticated user is staff, including OU tutors.
+    * @return boolean
     */
     public function is_staff()
     {
@@ -68,7 +54,9 @@ class Sams_Auth extends Privacy_Auth
         return $sess && (false !== strpos($sess, 'samsStaffID=') || false !== strpos($sess, 'samsTutorID='));
     }
 
-    /** Utility to safely get a cookie. */
+    /** Utility to safely get a cookie.
+    * @return string
+    */
     protected function cookie($key, $filter = FILTER_SANITIZE_STRING, $options = null)
     {
         return filter_input(INPUT_COOKIE, $key, $filter, $options);

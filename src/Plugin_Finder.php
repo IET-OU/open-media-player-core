@@ -31,6 +31,9 @@ class Plugin_Finder
         }
     }
 
+    /**
+    * @return array
+    */
     public function get_oembed_providers()
     {
         return self::$plugins->match('IET_OU\\Open_Media_Player\\Oembed_Provider');

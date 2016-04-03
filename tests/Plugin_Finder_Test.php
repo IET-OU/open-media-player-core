@@ -17,12 +17,18 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
 
         // Act
         $providers = $finder->get_oembed_providers();
-        $locals = $finder->get_local_embed_providers();
 
-        var_dump("Providers:", $providers);
+        echo 'Providers: ' . json_encode($providers, JSON_PRETTY_PRINT);
 
         // Assert
-        $this->assertEquals(4, count($providers));
+        $this->assertEquals(5, count($providers));
+    }
+
+    public function testLocalProviders()
+    {
+        $finder = new Plugin_Finder();
+
+        $locals = $finder->get_local_embed_providers();
 
         $this->assertEquals(0, count($locals));
     }
@@ -33,6 +39,6 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
 
         $themes = $finder->get_player_themes();
 
-        $this->assertEquals(0, count($themes));
+        $this->assertEquals(1, count($themes));
     }
 }

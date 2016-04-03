@@ -1,10 +1,6 @@
 <?php namespace IET_OU\Open_Media_Player\Test;
 
-use \IET_OU\Open_Media_Player\Media_Player_Theme;
-
-class Mock_Theme extends Media_Player_Theme
-{
-}
+use \IET_OU\Open_Media_Player\Test\Fixtures\Mock_Theme;
 
 class Player_Theme_Test extends \PHPUnit_Framework_TestCase
 {

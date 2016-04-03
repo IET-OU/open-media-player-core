@@ -18,8 +18,7 @@ class Gitlib_Test extends \PHPUnit_Framework_TestCase
         // Act
         $version = (object) $gitlib->put_revision();
 
-        echo "version.json: ";
-        echo json_encode($version, JSON_PRETTY_PRINT);
+        echo 'version.json: ' . json_encode($version, JSON_PRETTY_PRINT);
 
         // Asserts
         $this->assertRegExp('/^v?\d+\.\d+.+\-g\w{7}$/', $version->describe);

@@ -49,11 +49,8 @@
   "scripts": {
     "test": [
       "./vendor/bin/parallel-lint --exclude vendor .",
-      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/* tests/*",
+      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/* tests/* && echo OK",
       "phpunit"
-    ],
-    "test-cs": [
-      "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/* tests/*"
     ],
     "grep-ci": "grep -nri -e '>CI' -e 'CI->' -e '$CI' --exclude Base.php -- src/*",
     "fix": [
