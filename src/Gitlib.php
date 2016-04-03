@@ -19,16 +19,18 @@ class Gitlib extends Base
 
     protected $_hash;
     protected $last_success = true;
+    protected $composer;
 
     protected static $REVISION_FILE = 'version.json';
 
-    public function __construct()
+    public function __construct($assume_composer = true)
     {
         self::$REVISION_FILE = self::revision_file_path();
+        $this->composer = $assume_composer;
     }
 
     /**
-     * Return the start of the most recent commit hash (from file).
+     * @return string Return the start of the most recent commit hash (from file).
      * Maybe md5/ sha() the result?
      */
     public function lastHash($length = 6)
@@ -47,8 +49,9 @@ class Gitlib extends Base
         return substr($this->_hash, 0, $length);
     }
 
-    /** Save revision meta-data to a '.' file, JSON-encoded.
+    /** Save revision meta-data to a JSON-encoded file.
      *  (CloudEngine's Hglib uses PHP (un)serialize.)
+     * @return array
      */
     public function put_revision($echo = false)
     {
@@ -69,8 +72,8 @@ class Gitlib extends Base
                 if (!$key) {
                     $key = 'message';
                 }
-                $result[strtolower($key)] = trim(substr($line, $p+1));
-                if ('message'==$key) {
+                $result[ strtolower($key) ] = trim(substr($line, $p + 1));
+                if ('message' === $key) {
                     break;
                 }
             }
@@ -79,7 +82,8 @@ class Gitlib extends Base
 
         $result[ 'branch' ] = trim($this->_exec('symbolic-ref --short HEAD'));
         // http://stackoverflow.com/questions/4089430/how-can-i-determine-the-url-that-a-local-git-repo-was-originally-pulled-from
-        $result['origin'] = rtrim($this->_exec('config --get remote.origin.url'), "\r\n");
+        $origin_cmd = sprintf('config --get remote.%s.url', $this->composer ? 'composer' : 'origin');
+        $result['origin'] = rtrim($this->_exec($origin_cmd), "\r\n");
         #$result['origin url'] = str_replace(array('git@', 'com:'), array('https://', 'com/'), $result['origin']);
         #$result['agent'] = basename(__FILE__);
         #$result['git'] = rtrim($this->_exec('--version'), "\r\n ");
@@ -87,7 +91,7 @@ class Gitlib extends Base
 
         $bytes = $this->put_json(self::$REVISION_FILE, $result, $echo);
 
-        if (!$echo) {
+        if (! $echo) {
             fprintf(STDERR, "File written, %d: %s\n", $bytes, self::$REVISION_FILE);
         }
 
@@ -95,6 +99,7 @@ class Gitlib extends Base
     }
 
     /** Read revision meta-data from the '.' file.
+    * @return object
     */
     public function get_revision()
     {
@@ -147,7 +152,7 @@ class Gitlib extends Base
 
         $result = false;
         // The path may contain 'sudo ../git'.
-        if ('git' != $git_path && ! file_exists($git_path)) {
+        if ('git' !== $git_path && ! file_exists($git_path)) {
             fprintf(STDERR, "Warning, not found, %s\n", $git_path);
         }
 

@@ -5,9 +5,10 @@ php:
   #- 7.0
 
 git:
-  depth: 5
+  depth: 15
 
 before_install:
+  - git fetch --tags
   - composer self-update
 
 install:
@@ -16,5 +17,11 @@ install:
 script:
   - composer validate --no-interaction
   - composer test
+
+after_script:
+  - git --version
+  - git tag
+  - git describe
+  - cat .git/config
 
 #End.

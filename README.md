@@ -1,10 +1,10 @@
-<!-- [![Build status: Travis-CI][travis-icon]][travis-ci] -->
+[![Build status: Travis-CI][travis-icon]][travis-ci]
 
 # IET-OU / open-media-player-core
 
 Core components of Open Media Player — a unified, accessible online audio and video player from The Open University. _Part of the [Open Media Player][omp] framework._
 
-* https://mediaplayer.open.ac.uk
+* <https://embed.open.ac.uk>
 
 
 ## Installation
@@ -21,7 +21,7 @@ Install and test using Git and [Composer][],
 ---
 License:  [GPL version 3 onwards][gpl]
 
-© 2011-2015 [The Open University][ou] and contributors. ([Institute of Educational Technology][iet])
+© 2011-2016 [The Open University][ou] and contributors. ([Institute of Educational Technology][iet])
 
 
 [gpl]: http://gnu.org/licenses/gpl.html "GNU General Public License 3.0 or (at your option) any later version / GPL-3.0+"
