@@ -8,6 +8,8 @@ test.php
 .project
 _scratch
 
+version.json
+
 *.patch
 *.diff
 * copy*

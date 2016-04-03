@@ -152,7 +152,7 @@ class Gitlib extends Base
         }
 
         $cwd = getcwd();
-        if ($cwd) {
+        if ($cwd && defined('APPPATH')) {
             chdir(APPPATH);
         }
 
@@ -172,7 +172,8 @@ class Gitlib extends Base
         return implode("\n", $output);
     }
 
-    protected function gitDescribeVersion($result) {
+    protected function gitDescribeVersion($result)
+    {
         // Describe "v0.86-usertest-95-g.."
         // Semantic Versioning, http://semver.org
         $result[ 'describe' ] = trim($this->_exec('describe --tags --long'));

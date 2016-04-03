@@ -11,6 +11,7 @@ install:
   - composer install --prefer-source
 
 script:
+  - composer validate --no-interaction
   - composer test
 
 #End.

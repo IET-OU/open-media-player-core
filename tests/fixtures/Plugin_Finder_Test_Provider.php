@@ -2,7 +2,7 @@
 
 use \IET_OU\Open_Media_Player\Oembed_Provider;
 
-class SubClasses_Test_Provider extends Oembed_Provider
+class Plugin_Finder_Test_Provider extends Oembed_Provider
 {
 
     public $domain = 'example.org';
