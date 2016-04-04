@@ -6,7 +6,6 @@
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
  * @copyright Copyright 2016 The Open University.
  * @author    Nick Freear, 3 April 2016.
- * @link      https://phpunit.de/manual/current/en/appendixes.assertions.html
  */
 
 use \IET_OU\Open_Media_Player\Gitlib;

@@ -50,6 +50,7 @@
   "scripts": {
     "test": [
       "./vendor/bin/parallel-lint --exclude vendor .",
+      "phpcs --version",
       "phpcs --standard=./phpcs.xml -n --encoding=utf-8 --extensions=php src/* tests/* && echo OK",
       "phpunit"
     ],

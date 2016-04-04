@@ -1,8 +1,13 @@
 <?php namespace IET_OU\Open_Media_Player\Test\Extend;
 
 /**
- * Add customassertions -- assertStrMinLength, assertStrContains...?
- * @author Nick Freear, 4 April 2016.
+ * Add custom assertions -- assertStrMinLength, assertStrContains, assertISODate ...?
+ *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2016 The Open University.
+ * @author    Nick Freear, 4 April 2016.
+ * @link      https://phpunit.de/manual/current/en/extending-phpunit.html
+ * @link      https://phpunit.de/manual/current/en/appendixes.assertions.html
  */
 
 abstract class PHPUnit_TestCase_Extended extends \PHPUnit_Framework_TestCase //\PHPUnit_Framework_Assert

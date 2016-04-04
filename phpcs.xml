@@ -66,6 +66,12 @@
     <![endif]-->
   </rule>
 
+  <!-- Too draconian! https://github.com/squizlabs/PHP_CodeSniffer/tree/2.6.0/CodeSniffer/Standards -->
+  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing">
+    <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
+    <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
+  </rule>
+
   <!--
     Accept class names like "MY_Controller".
   -->
