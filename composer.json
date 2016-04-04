@@ -37,6 +37,7 @@
   "autoload-dev": {
     "psr-4": {
       "IET_OU\\Open_Media_Player\\Test\\": "tests",
+      "IET_OU\\Open_Media_Player\\Test\\Extend\\": "tests/extend",
       "IET_OU\\Open_Media_Player\\Test\\Fixtures\\": "tests/fixtures"
     }
   },

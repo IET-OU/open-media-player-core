@@ -23,7 +23,7 @@ class Gitlib extends Base
 
     protected static $REVISION_FILE = 'version.json';
 
-    public function __construct($assume_composer = true)
+    public function __construct($assume_composer = false)
     {
         self::$REVISION_FILE = self::revision_file_path();
         $this->composer = $assume_composer;
@@ -56,7 +56,7 @@ class Gitlib extends Base
     public function put_revision($echo = false)
     {
         $result = false;
-        $log = $this->_exec('log -1');
+        $log = $this->_exec('log -1 --date=iso');
         $result[ '#' ] = $log ? 'OK' : 'Warning, Git not found? Proceed without.';
         $result[ 'ok' ] = (bool) $log;
         if (! $log) {
@@ -67,7 +67,7 @@ class Gitlib extends Base
         //Hmm, a more efficient way?
         foreach ($log as $line) {
             if (false !== ($p = strpos($line, ' '))) {
-#':'
+
                 $key = trim(substr($line, 0, $p), ' :');
                 if (!$key) {
                     $key = 'message';
@@ -81,8 +81,9 @@ class Gitlib extends Base
         $result = $this->gitDescribeVersion($result);
 
         $result[ 'branch' ] = trim($this->_exec('symbolic-ref --short HEAD'));
+        //NO! $result[ 'branch' ] = $this->_exec('branch');
         // http://stackoverflow.com/questions/4089430/how-can-i-determine-the-url-that-a-local-git-repo-was-originally-pulled-from
-        $origin_cmd = sprintf('config --get remote.%s.url', $this->composer ? 'composer' : 'origin');
+        $origin_cmd = sprintf('config --get remote.%s.url', ($this->composer ? 'composer' : 'origin'));
         $result['origin'] = rtrim($this->_exec($origin_cmd), "\r\n");
         #$result['origin url'] = str_replace(array('git@', 'com:'), array('https://', 'com/'), $result['origin']);
         #$result['agent'] = basename(__FILE__);

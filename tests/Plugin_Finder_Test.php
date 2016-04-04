@@ -1,5 +1,11 @@
 <?php namespace IET_OU\Open_Media_Player\Test;
 
+/**
+ * Unit tests for the `Plugin_Finder` class (was: SubClasses_Test.php)
+ *
+ * @author Nick Freear, 25 June 2016.
+ */
+
 use \IET_OU\Open_Media_Player\Plugin_Finder;
 
 class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
@@ -21,7 +27,7 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
         echo 'Providers: ' . json_encode($providers, JSON_PRETTY_PRINT);
 
         // Assert
-        $this->assertEquals(5, count($providers));
+        $this->assertCount(5, $providers, 'oEmbed providers');
     }
 
     public function testLocalProviders()
@@ -30,7 +36,7 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
 
         $locals = $finder->get_local_embed_providers();
 
-        $this->assertEquals(0, count($locals));
+        $this->assertCount(0, $locals, 'Local providers');
     }
 
     public function testPlayerThemes()
@@ -39,6 +45,6 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
 
         $themes = $finder->get_player_themes();
 
-        $this->assertEquals(1, count($themes));
+        $this->assertCount(1, $themes, 'Player themes');
     }
 }

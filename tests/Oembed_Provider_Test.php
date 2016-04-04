@@ -1,5 +1,11 @@
 <?php namespace IET_OU\Open_Media_Player\Test;
 
+/**
+ * Unit tests for 'Oembed_Provider'-derived classes.
+ *
+ * @author Nick Freear, 24 June 2015.
+ */
+
 use \IET_OU\Open_Media_Player\Test\Fixtures\Mock_Service_Provider;
 use \IET_OU\Open_Media_Player\Oupodcast_Provider;
 

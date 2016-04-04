@@ -5,7 +5,7 @@ php:
   #- 7.0
 
 git:
-  depth: 15
+  depth: 20
 
 before_install:
   - git fetch --tags
@@ -21,7 +21,9 @@ script:
 after_script:
   - git --version
   - git tag
-  - git describe
+  - git branch
+  - git symbolic-ref --short HEAD
+  - git describe --tags --long
   - cat .git/config
 
 #End.

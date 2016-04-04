@@ -1,8 +1,18 @@
 <?php namespace IET_OU\Open_Media_Player\Test;
 
-use \IET_OU\Open_Media_Player\Gitlib;
+/**
+ * Unit tests for the `Gitlib` class.
+ *
+ * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
+ * @copyright Copyright 2016 The Open University.
+ * @author    Nick Freear, 3 April 2016.
+ * @link      https://phpunit.de/manual/current/en/appendixes.assertions.html
+ */
 
-class Gitlib_Test extends \PHPUnit_Framework_TestCase
+use \IET_OU\Open_Media_Player\Gitlib;
+use \IET_OU\Open_Media_Player\Test\Extend\PHPUnit_TestCase_Extended;
+
+class Gitlib_Test extends PHPUnit_TestCase_Extended
 {
     public function setup()
     {
@@ -21,11 +31,16 @@ class Gitlib_Test extends \PHPUnit_Framework_TestCase
         echo 'version.json: ' . json_encode($version, JSON_PRETTY_PRINT);
 
         // Asserts
-        $this->assertRegExp('/^v?\d+\.\d+.+\-g\w{7}$/', $version->describe);
-        $this->assertRegExp('@github.com[\/:]IET-OU\/open-media-player-core@', $version->origin);
-        $this->assertRegExp('/^20\d{2}-\d{2}-\d{2}T\d{2}:/', $version->file_date);
+        $this->assertIsHex(40, $version->commit, '$v->commit');
+        $this->assertRegExp('/^v?\d+\.\d+.+\-g\w{7}$/', $version->describe, '$v->describe');
+        $this->assertUrlLike('/github.com[\/:]IET-OU\/open-media-player-core/', $version->origin, '$v->origin');
+        $this->assertISODate($version->file_date, '$v->file_date');
+        $this->assertISODate($version->date, '$v->date');
 
-        $this->assertEquals('master', $version->branch);
-        $this->assertEquals('OK', $version->{ '#' });
+        //Was: $this->assertRegExp('/(\* )?master$/', $version->branch);
+        $this->assertEquals('OK', $version->{ '#' }, '$v->{ # }');
+        $this->assertEmailLike($version->author, '$v->author');
+        $this->assertStrMinLength(7, $version->message, '$v->message');
+        $this->assertStrMinLength(12, $version->describe, '$v->describe');
     }
 }
