@@ -28,6 +28,7 @@ class Plugin_Finder_Test extends \PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertCount(5, $providers, 'oEmbed providers');
+        $this->assertRegExp('/^IET_OU/', $providers[ 'podcast.open.ac.uk' ]);
     }
 
     public function testLocalProviders()

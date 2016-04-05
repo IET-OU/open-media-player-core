@@ -3,6 +3,8 @@
 /**
  * Unit tests for the `Gitlib` class.
  *
+ * NOTE: on Travis-CI, the git repo. is in a detached head state!
+ *
  * @license   http://gnu.org/licenses/gpl.html GPL-3.0+
  * @copyright Copyright 2016 The Open University.
  * @author    Nick Freear, 3 April 2016.
@@ -17,6 +19,8 @@ class Gitlib_Test extends PHPUnit_TestCase_Extended
     {
         \IET_OU\Open_Media_Player\Base::$throw_no_framework = false;
         \IET_OU\SubClasses\SubClasses::$verbose = true;
+
+        printf("Travis? %s\n", (self::isTravis() ? 'yes':'no'));
     }
 
     public function testPutRevision()
@@ -32,14 +36,17 @@ class Gitlib_Test extends PHPUnit_TestCase_Extended
         // Asserts
         $this->assertIsHex(40, $version->commit, '$v->commit');
         $this->assertRegExp('/^v?\d+\.\d+.+\-g\w{7}$/', $version->describe, '$v->describe');
-        $this->assertUrlLike('/github.com[\/:]IET-OU\/open-media-player-core/', $version->origin, '$v->origin');
         $this->assertISODate($version->file_date, '$v->file_date');
         $this->assertISODate($version->date, '$v->date');
 
-        //Was: $this->assertRegExp('/(\* )?master$/', $version->branch);
         $this->assertEquals('OK', $version->{ '#' }, '$v->{ # }');
         $this->assertEmailLike($version->author, '$v->author');
         $this->assertStrMinLength(7, $version->message, '$v->message');
         $this->assertStrMinLength(12, $version->describe, '$v->describe');
+
+        if (self::notTravis()) {
+            $this->assertRegExp('/(\* )?master$/', $version->branch);
+            $this->assertUrlLike('/github.com[\/:]IET-OU\/open-media-player-core/', $version->origin, '$v->origin');
+        }
     }
 }

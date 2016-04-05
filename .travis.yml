@@ -24,6 +24,8 @@ after_script:
   - git branch
   - git symbolic-ref --short HEAD
   - git describe --tags --long
+  - echo $TRAVIS_BRANCH
+  - echo $TRAVIS_REPO_SLUG
   - cat .git/config
 
 #End.

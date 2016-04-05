@@ -47,10 +47,20 @@ abstract class PHPUnit_TestCase_Extended extends \PHPUnit_Framework_TestCase //\
         $this->assertRegExp($pattern, $testString, self::f($message, __FUNCTION__, $pattern));
     }
 
+    public static function isTravis()
+    {
+        return getenv('TRAVIS');
+    }
+
+    public static function notTravis()
+    {
+        return ! getenv('TRAVIS');
+    }
+
     /**
     * @return string Format a message.
     */
-    protected function f($message, $caller, $extra = null)
+    protected static function f($message, $caller, $extra = null)
     {
         return sprintf('%s (%s)', $message, ($extra ? "$caller: $extra" : $caller));
     }
