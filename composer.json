@@ -21,7 +21,7 @@
     "nfreear/plugin-genie": "^1.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.5",
+    "squizlabs/php_codesniffer": "^2.6",
     "jakub-onderka/php-parallel-lint": "^0.9.2",
     "phpunit/phpunit": "~4.0"
   },
@@ -64,6 +64,9 @@
     "x--preferred-install": "source"
   },
   "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    },
     "//": [
       "http://www.testically.org/2010/08/24/best-practice-how-to-ship-phpunit-configuration/",
       "https://gist.github.com/nfreear/57262e040d49b2f212ec"
