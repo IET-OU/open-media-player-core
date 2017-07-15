@@ -21,9 +21,9 @@ if ('json'==$format):
       $oembed['html'] = str_replace(array('  ', "\r", "\n"), array(' ', ''), $oembed['html']);
   }
 
-  $json = json_encode($oembed);
-  $json = str_replace('"dc:', '"dc$', $json); //XML namespaces - check Gdata.
-  $json = str_replace(',"',  ','.PHP_EOL.'"', $json);
+  $json = json_encode($oembed, JSON_PRETTY_PRINT);
+  $json = str_replace('"dc:', '"dc$', $json); // XML namespaces - check Gdata.
+  // $json = str_replace(',"',  ','.PHP_EOL.'"', $json);
   //Pretty-print?
   if ($callback) {
     $json = "$callback($json)";

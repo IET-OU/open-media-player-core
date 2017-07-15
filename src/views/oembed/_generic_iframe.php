@@ -10,7 +10,7 @@
 
   $html = <<<EOF
 <div class='$meta->class_name generic-iframe embed-rsp'>
-<iframe role='document' allowfullscreen mozallowfullscreen webkitallowfullscreen title='$iframe_label'
+<iframe role='document' allowfullscreen title='$iframe_label'
  width='$meta->width' height='$meta->height' frameborder='0'
  src='$meta->embed_url'
 ></iframe>
