@@ -20,7 +20,7 @@ Install and test using Git and [Composer][],
 ---
 License:  [GPL version 3 onwards][gpl]
 
-© 2011-2016 [The Open University][ou] and contributors. ([Institute of Educational Technology][iet])
+© 2011-2017 [The Open University][ou] and contributors. ([Institute of Educational Technology][iet])
 
 
 [gpl]: https://gnu.org/licenses/gpl.html
